@@ -1,0 +1,6 @@
+#!/bin/bash
+g++ wf.c -o wf.exe
+wf.exe
+awk -f anm.awk > anm.cmd
+wgnuplot anm.cmd
+ffmpeg -r 9 -i out_1%%3d.png -r 50 wf.mpg
