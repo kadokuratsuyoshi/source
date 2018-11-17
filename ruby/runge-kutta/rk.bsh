@@ -1,0 +1,3 @@
+#!/bin/bash
+ruby rk.rb > rk.txt
+gnuplot rk.plt
