@@ -1,0 +1,9 @@
+#!/bin/bash
+i=9999999999;
+while true;
+   do echo  Until a time bomb will excite at $i; 
+   sleep 1s;
+   i=$(expr $i - 1);
+done
+
+
