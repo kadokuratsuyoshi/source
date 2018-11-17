@@ -1,0 +1,77 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+
+export PATH=$PATH:.:/sbin:/usr/local/cuda/bin
+export MANPATH=$MANPATH:/usr/local/teTeX/man
+export MANPATH=$MANPATH:/usr/local/cuda/man
+export PS1="[\u@\h \W]\\$ "
+export LANG=
+#export LD_LIBRARY_PATH=/usr/local/cuda/lib64
+#export INCLUDES="-I /usr/local/cuda/include"
+#export LIBRARIES="-L /usr/local/cuda/lib64"
+case `hostname` in
+	tempest | ts3d | hpctech)
+	export OMP_NUM_THREADS=8
+	;;
+	xeonmp)
+	export OMP_NUM_THREADS=16
+	;;
+	*)
+	export OMP_NUM_THREADS=2
+	;;
+esac
+
+#==========
+# Prompt
+#==========
+#PS1='[\u@\h \W]\$ ' # default
+#PS1='[\u@\h \W \!]\$ '
+#PS1='[\[\033[0;32m\]\u@\h \[\033[0;00m\]\W \!]\$ '
+PS1='[\[\033[0;32m\]\u\[\033[0;00m\]@\[\033[0;34m\]\h \[\033[0;00m\]\W \!]\$ '
+
+#==========
+# Alias
+#==========
+alias bye='exit'
+alias ls='ls -F --color'
+alias ll='ls -l'
+alias la='ls -a'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias emacs='emacs -fn 7x14'
+alias gp='/usr/local/bin/gnuplot'
+alias dvi2ps='pdvips -f'
+alias a2ps='/usr/local/bin/a2ps'
+alias xdvi='pxdvi -expert'
+alias rmtex='rm -f *.dvi *.aux *.log *.bib'
+alias jlatex='platex'
+alias rmo='rm -f *.o PI* core.* my_output'
+alias backup='cd; tar cvzf kadokura.tar.gz b4 m1'
+alias lpr='lpr -P konica'
+alias sumire='ssh -l k17700 sumire.issp.u-tokyo.ac.jp'
+alias tadpole='ssh -D 1080 -l saito tadpole.phys.s.u-tokyo.ac.jp'
+alias cls='clear' 
+alias xyzzy='emacs'
+alias ls='ls --color -F'
+alias dir='ls -l'
+alias xeon='rlogin xeonmp'
+alias hpctech='rlogin hpctech'
+alias kadokura='du -s /home/kadokura'
+alias aioi='du -s /home/aioi'
+alias gpu='nvidia-smi -q -d UTILIZATION'
+alias computer='/usr/local/bin/suptime'
+#==========
+# TensorFlow
+#==========
+LDPATH="${HOME}/local/lib64/ld-linux-x86-64.so.2"
+LDLIBS="${HOME}/local/lib64"
+LDLIBS="${LDLIBS}:${HOME}/local/usr/lib64"
+PYPATH="${HOME}/anaconda2/bin/python"
+alias python-tensorflow="${LDPATH} --library-path ${LDLIBS} ${PYPATH}"
