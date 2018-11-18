@@ -20,7 +20,6 @@ procedure rk is
 	t, dt, x, v, dx, dv: Float;
 	k1 : array(0..1) of Float;
 	k2 : array(0..1) of Float;
-
 begin
 	t := 0.0;
 	dt := 0.01;
