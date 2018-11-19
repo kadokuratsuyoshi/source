@@ -7,9 +7,9 @@ end;
 function rk_a(t, x, v : real):real;
     var k, m, a : real;
 begin
-    k = 1.0;
-    m = 1.0;
-    a = 1.0;
+    k := 1.0;
+    m := 1.0;
+    a := 1.0;
     rk_a := -1.0*(k/m)*x - (a/m)*v
 end;
 
