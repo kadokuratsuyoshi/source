@@ -21,12 +21,12 @@ module test;
 	
 always #1 clk = ~clk;
 initial begin
-        #1;
-        rst <= 1'b0;
+	#1;
+	rst <= 1'b0;
 	clk <= 1'b1;
-        d <= 1'b0;
+	d <= 1'b0;
 	#2;
-        rst <= 1;
+	rst <= 1;
 	for (i=0; i<100; i=i+1) begin
         	#4;
 		if ( i == 10 ) begin
