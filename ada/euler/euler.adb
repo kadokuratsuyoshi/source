@@ -15,12 +15,11 @@ begin
 	m := 1.0;
 	a := 1.0;
 	loop
+		Put_Line(t, x, v);
 		dx := v * dt;
 		dv := (-1.0*(k/m)*x - (a/m)*v) * dt;
 		x := x + dx;
 		v := v + dv;
-		Put(t, x, v);
-		Put_Line("");
 		t := t + dt;
 		exit when t > 10.0;
 	end loop;
