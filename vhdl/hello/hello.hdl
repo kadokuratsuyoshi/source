@@ -1,0 +1,27 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity hello is
+  Port (
+    RST   : in  std_logic;
+    CLK   : in  std_logic;
+    LED   : out std_logic;
+  );
+end hello;
+
+architecture Behavioral of hello is
+  signal CNT : std_logic_vector(7 downto 0);
+begin
+  process ( RST, CLK ) 
+  begin
+    if ( RST = '0' ) then
+      CNT <= (others => '0') ;
+    elsif rising_edge( CLK ) then
+      CNT <= CNT + '1' ;
+    end if ;
+  end process ;
+--  LED <= '1' when ( CNT(7 downto 7) = "0" ) else '0' ;
+  LED <= '1' when ( conv_integer( CNT ) < 128 ) else '0' ;
+end Behavioral;
