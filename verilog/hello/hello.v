@@ -4,12 +4,12 @@ module hello (
         d,
         q
     );
-    input		rst;
-    input		clk;
+    input	rst;
+    input	clk;
     input       d;
     output      q;
-
-    reg     r;
+    reg         r;
+        
     assign q = r;
     always @ (posedge clk or negedge rst ) begin
         if ( !rst ) begin
