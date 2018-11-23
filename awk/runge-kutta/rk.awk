@@ -17,6 +17,7 @@ BEGIN {
     dx = 0.0
     dv = 0.0
     for (t=dt; t<=10.0; t=t+dt ) {
+        printf "%f, %f, %f\n", t, x, v
         k1[1] = dt * rk_v(t, x, v)
         k1[2] = dt * rk_a(t, x, v)
         k2[1] = dt * rk_v(t+dt/2.0, x+k1[1]/2.0, v+k1[2]/2.0)
@@ -29,6 +30,5 @@ BEGIN {
         dv = (k1[2]+2.0*k2[2]+2.0*k3[2]+k4[2])/6.0
         x = x + dx
         v = v + dv
-        printf "%f,%f,%f\n", t, x, v
     }
 }
