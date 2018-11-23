@@ -26,6 +26,7 @@ begin
 	x := 1.0;
 	v := 0.0;
 	loop
+		Put_Line(t, x, v);
 		k1(0) := rk_v(t, x, v) * dt;
 		k1(1) := rk_a(t, x, v) * dt;
 		k2(0) := rk_v(t+dt/2.0, x+k1(0)/2.0, v+k1(1)/2.0) * dt;
@@ -36,10 +37,8 @@ begin
 		k4(1) := rk_a(t+dt, x+k3(0), v+k3(1)) * dt;
 		dx := (k1(0)+2.0*k2(0)+2.0*k3(0)+k4(0))/6.0;
 		dv := (k1(1)+2.0*k2(1)+2.0*k3(1)+k4(1))/6.0;
-		x := x + dx;
+		x := x + dv;
 		v := v + dv;
-		Put(t, x, v);
-		Put_Line("");
 		t := t + dt;
 		exit when t > 10.0;
 	end loop;
