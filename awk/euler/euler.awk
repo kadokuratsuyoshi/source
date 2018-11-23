@@ -9,10 +9,10 @@ BEGIN {
     m = 1.0
     a = 1.0
     for (t=dt; t<=10.0; t=t+dt ) {
+        printf "%f, %f, %f\n", t, x, v
         dx = v * dt
         dv = (-1.0*(k/m)*x - v*(a/m)) * dt
         x = x + dx
         v = v + dv
-        printf "%f,%f,%f\n", t, x, v
     }
 }
