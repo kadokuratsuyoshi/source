@@ -3,7 +3,7 @@ module timeunit();
 	initial $timeformat(-9, 1, " ns", 9);
 endmodule
 module test;
-	parameter RATE			= 15.625;
+	parameter RATE = 15.625;
 	// for input
 	reg	rst;
 	reg	clk;
