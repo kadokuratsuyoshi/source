@@ -9,9 +9,9 @@ k = 1.0
 m = 1.0
 a = 1.0
 for t in range(n):
+    print("%f %f %f" % (nt, x, v))
     dx = v * dt
     dv = (-1.0 * (k/m) * x - (a/m) * v) * dt
     x = x + dx
     v = v + dv
     nt = t * dt
-    print("%d %f %f %f" % (t, nt, x, v))
