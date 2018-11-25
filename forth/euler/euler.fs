@@ -1,4 +1,4 @@
-\ euler.fs, 79-FORTH ROM for Apple II or gforth
+\ euler.fs, 79-FORTH ROM for Apple-1(L-Star/Propeller Computer) or gforth, DoKA
 fvariable t
 fvariable dt
 fvariable x
@@ -11,17 +11,17 @@ fvariable a
 fvariable p
 fvariable q
 : euler
-    0.0e t f!
-    0.01e dt f!
-    1.0e x f!
-    0.0e v f!
-    0.0e dx f!
-    0.0e dv f!
-    1.0e k f!
-    1.0e m f!
-    1.0e a f!
-    0.0e p f!
-    0.0e q f!
+	0.0e t f!
+	0.01e dt f!
+	1.0e x f!
+	0.0e v f!
+	0.0e dx f!
+	0.0e dv f!
+	1.0e k f!
+	1.0e m f!
+	1.0e a f!
+	0.0e p f!
+    	0.0e q f!
 	1000 0 do 
 		v f@ dt f@ f* dx f!
 		-1.0e k f@ f* m f@ f/ x f@ f* p f!
