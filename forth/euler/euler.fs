@@ -1,4 +1,4 @@
-\ euler.fs, 79-FORTH ROM for Apple-1(L-Star/Propeller Computer) or gforth, DoKA
+\ euler.fs, 79-FORTH ROM for Apple II or gforth, DoKA
 fvariable t
 fvariable dt
 fvariable x
