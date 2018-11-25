@@ -39,7 +39,7 @@ double getT(int n){
   return t;
 }
 
-cmplx hasoku(int m){
+cmplx wavefunc(int m){
   cmplx z, w;
   double x = getX(m);
   double re, im;
@@ -77,7 +77,7 @@ void init(void){
   }
 
   for(m=1; m<=M_MAX-1; m++){
-    Psi[0][m] = hasoku(m);
+    Psi[0][m] = wavefunc(m);
   }
 
   for(m=0; m<=M_MAX; m++){
