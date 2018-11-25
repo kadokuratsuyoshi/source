@@ -8,7 +8,7 @@
 	fvariable a 1.0e a f!
 	fvariable p 0.0e p f!
 	fvariable q 0.0e q f!
-	cr 100 0 do cr i.
+	cr 1000 0 do cr i.
 		v f@ dt f@ f* dx f!
 		-1.0e k f@ f* m f@ f/ x f@ f* p f!
 		a f@  m f@ f/ v f@ f* q f!
@@ -17,4 +17,5 @@
 		v f@ dv f@ f+ v f!
 		t f@ dt f@ f+ t f!
 		cr t f@ t f. x f@ x f. v f@ x f.
-	loop;
+	loop
+;
