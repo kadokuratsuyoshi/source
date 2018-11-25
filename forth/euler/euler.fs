@@ -10,7 +10,7 @@
     1.0e a f!
     0.0e p f!
     0.0e q f!
-	100 0 do 
+	1000 0 do 
 		v f@ dt f@ f* dx f!
 		-1.0e k f@ f* m f@ f/ x f@ f* p f!
 		a f@  m f@ f/ v f@ f* q f!
