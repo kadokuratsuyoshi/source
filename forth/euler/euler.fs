@@ -1,4 +1,4 @@
-/ euler.fs , 79-FORTH ROM for Apple II or gforth
+/ euler.fs, 79-FORTH ROM for Apple II or gforth
 fvariable t
 fvariable dt
 fvariable x
