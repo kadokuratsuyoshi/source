@@ -1,4 +1,4 @@
-	with	Ada.Text_IO,
+with	Ada.Text_IO,
 	Ada.Float_Text_IO;
 use	Ada.Text_IO,
 	Ada.Float_Text_IO;
