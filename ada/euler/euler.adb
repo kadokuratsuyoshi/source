@@ -14,12 +14,12 @@ begin
 	k := 1.0;
 	m := 1.0;
 	a := 1.0;
-    loop
-	Put(Item => Float'Adjacent(t, Float'First));
-        Put(" ");
-	Put(Item => Float'Adjacent(x, Float'First));
-        Put(" ");
-	Put(Item => Float'Adjacent(v, Float'First));
+	loop
+		Put(Item => Float'Adjacent(t, Float'First));
+		Put(" ");
+		Put(Item => Float'Adjacent(x, Float'First));
+		Put(" ");
+		Put(Item => Float'Adjacent(v, Float'First));
 		Put_Line("");
 		dx := v * dt;
 		dv := (-1.0*(k/m)*x - (a/m)*v) * dt;
