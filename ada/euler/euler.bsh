@@ -1,0 +1,4 @@
+#!/bin/bash
+gnatmake euler.adb
+./euler > euler.txt
+gnuplot euler.plt
