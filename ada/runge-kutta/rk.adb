@@ -1,4 +1,4 @@
-with	Ada.Text_IO,
+	with	Ada.Text_IO,
 	Ada.Float_Text_IO;
 use	Ada.Text_IO,
 	Ada.Float_Text_IO;
@@ -10,18 +10,18 @@ procedure rk is
 	k3 : array(0..1) of Float;
 	k4 : array(0..1) of Float;
 
-    function rk_v(t, x, v: Float) return Float is
-    begin
-	    return v;
-    end rk_v;
+	function rk_v(t, x, v: Float) return Float is
+	begin
+		return v;
+	end rk_v;
 
-    function rk_a(t, x, v: Float) return Float is
-	    k : Float := 1.0;
-	    m : Float := 1.0;
-	    a : Float := 1.0;
-    begin
-	    return (-1.0*(k/m)*x - (a/m)*v);
-    end rk_a;
+	function rk_a(t, x, v: Float) return Float is
+		k : Float := 1.0;
+		m : Float := 1.0;
+		a : Float := 1.0;
+	begin
+		return (-1.0*(k/m)*x - (a/m)*v);
+	end rk_a;
 
 begin
 	t := 0.0;
@@ -29,11 +29,11 @@ begin
 	x := 1.0;
 	v := 0.0;
 	loop
-	    Put(Item => Float'Adjacent(t, Float'First));
-        Put(" ");
-	    Put(Item => Float'Adjacent(x, Float'First));
-        Put(" ");
-	    Put(Item => Float'Adjacent(v, Float'First));
+		Put(Item => Float'Adjacent(t, Float'First));
+		Put(" ");
+		Put(Item => Float'Adjacent(x, Float'First));
+		Put(" ");
+		Put(Item => Float'Adjacent(v, Float'First));
 		Put_Line("");
 		k1(0) := rk_v(t, x, v) * dt;
 		k1(1) := rk_a(t, x, v) * dt;
