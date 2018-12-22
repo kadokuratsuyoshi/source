@@ -1,0 +1,60 @@
+hj.txt
+
+from Hamilton-Jacobi equation
+to Schrodinger equation
+
+
+dS/dt + H(p, q, t) = 0
+H = p^2/2m + V(x,t)
+
+dS/dt = p^2/2m + V(x,t)
+p = dS/dx
+dS/dt = 1/2m (dS/dx)^2 + V(x,t)
+
+psi(x,t) = psi0 exp(iS(x,t)/hbar) 
+then
+S(x,t) = -i hbar(ln psi - ln psi0) = -i hbar ln(psi/psi0)
+psi0(x,t) = 1
+S(x,t) = -i hbar ln(psi(x,t))
+p = dS/dx = -i hbar 1/psi dpsi/dx
+momentum : dS/dx = nabla S = -i hbar 1/psi dpsi/dx = p
+p psi = -i hbar dpsi/dx
+p = -i hbar d/dx
+p^2 = -hbar^2 (d/dx)^2
+
+energy : E = dS/dt = -i hbar 1/psi dpsi/dt
+
+E = p^2/2m + V(x,t)
+dS/dt = 1/2m (dS/dx)^2 + V(x,t)
+
+-i hbar 1/psi dpsi/dt = 1/2m( -i hbar 1/psi dpsi/dx ) (-i hbar 1/psi dpsi/dx ) + V(x,t)
+-i hbar 1/psi dpsi/dt = -hbar^2/2m 1/psi^2 (dpsi/dx)^2 + V(x,t)
+
+i hbar dpsi/dt = -hbar^2/2m 1/psi ( dpsi/dx)^2 + V(x,t) psi
+
+
+1.method as momentum operator
+p psi = -i hbar dpsi/dx
+p = -i hbar d/dx
+
+
+2.method as uncertainty principle
+delta p delta x <= hbar/2 = 1.054578e-34/2
+
+<p^2> = <p>^2 + (delta p)^2 = p^2 + (delta p)^2
+(delta p)^2 = (delta p/delta x)(delta p)(delta x)
+
+p = dS/dx = -i hbar 1/psi dpsi/dx
+dp/dx = d/dx(-i hbar 1/psi dpsi/dx) = -i hbar d/dx(1/psi dpsi/dx) = i hbar(1/psi^2 (dpsi/dx)^2 - 1/psi(d^2 psi/dx^2) )
+dp/dx = (delta p/delta x) = hbar 1/psi^2 (dpsi/dx)^2 - hbar 1/psi d^2 psi/dx^2
+
+p^2 + (delta p)^2 = (-hbar 1/psi (dpsi/dx))^2 + (hbar d/dx() )^2 
+                  = -hbar^2 1/psi^2 (dpsi/dx)^2 + (hbar^2 1/psi^2 (dpsi/dx)^2 - hbar^2 1/psi d^2psi/dx^2)
+                  = -hbar^2 1/psi d^2psi/dx^2
+
+
+therefore the Schrodinger equation can be written as follows
+           i hbar dpsi/dt = - hbar^2/2m d^2psi/dx^2 + V(x,t)psi
+           i hbar d/dt psi = [-hbar^2/2m d^2/dx^2 + V(x,t)]psi
+
+eof
