@@ -1,0 +1,40 @@
+full load thermal rating:     120VA
+primary:    100Vrms/1.2Arms
+secondary:  24Vrms/5Arms
+frequency:  50Hz
+            80 degree rise, 3.03% impedance
+phase:      1phi (uniphase, triphase)
+cooling:    N.A. (natural air, forced air, water cooling, oil cooling)
+class:      type A (H/F/B/A), 105 degree celsius
+
+
+
+Bm:1.55T (1Gauss = 0.1mT)
+Ae:50mmx30mm = 0.0015m^2
+
+Np = (100*sqrt(2)) / (2 * pi * 50 * 1.55 * 0.0015 * 0.96) = 202.3 = 200turn
+Ns = Np * (24/100) = 48turn 
+
+Ae : effective cross-section area of core
+Np : primary number of turns
+Ns : secondary number of turns
+
+V = - Phi/dt (Lentzs's law, Phi=BS)
+Vt = -Phi = -BS
+V/S = - B/t
+V/(r^2) = -B/t (r^2=S)
+(V/r)/r = -B/t
+E/r = -B/t (V/r=E)
+dE/dr = -dB/dt (differentialize)
+dE(x,y,z)/d(dx/ry,-dy/rx,0) = -dB/dt (Fleming's left-hand rule)
+rot E = -dB/dt (Maxwell equation)
+int rot E div n dS = int(-dB/dt)dS (integration) 
+int div E dr  = -int dB/dt dS (Stokes theorem) 
+E(r,0,0) = -BS/t
+Vop/(2piN) = -BS/t, ( N=r(n/2pi) )
+Vop = -2piNBS/t = 2pifNBS
+N = Vop/2pifBS = Vop/omegaBS (Vop = Vrms * sqrt(2))
+Np = Vprms / (frequency x density of magneti flux x Ae)
+Ns = Np * (Vsrms/Vprms)
+
+    eof
