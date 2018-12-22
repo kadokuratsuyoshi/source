@@ -1,0 +1,32 @@
+wave.txt
+
+wavefunction
+d^2 u/dt^2 = (T/p) d^2 u/dx^2
+
+
+Force of Right-hand-side : F(x+dx) = T sin theta1
+Force of Left-hand-side : F(x) = -T sin theta2
+
+ma = F
+m = p dx   : multiplys density of line (p) and  length
+a = d^2 u/dt^2
+F = T sin theta1 - T sin theta2
+
+hence  p dx d^2 u/dt^2 = T sin theta1 - T sin theta2
+
+sin approximation ( theta << 1 -> cos theta = 1 ) or Taylor expansion
+sin theta = (sin theta)/(cos theta) cos theta = tan theta cos theta = du(x,t)/dx cos theta = du/dx
+
+p dx d^2 u/dt^2 = T sin theta1 - T sin theta2
+
+d^2 u/dt^2 = (T/p) (1/dx) (sin theta1 - sin theta2)
+
+d^2 u/dt^2 = (T/p) (1/dx) ( du(x+dx,t)/dx - du(x,t)/dx )
+
+d^2 u/dt^2 = (T/p) d^2 u/dx^2
+
+
+therefore d^2 u/dt^2 = (T/p) d^2 u/dx^2
+
+
+eof
