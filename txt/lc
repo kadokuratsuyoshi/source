@@ -1,0 +1,29 @@
+lc.txt
+
+the definition of Alternate Current 
+i = I sin wt
+di/dt = Iw cos wt
+
+the definition of Alternating Voltage
+v = V cos wt
+dv/dt = -Vw sin wt
+
+
+the AC impedance, resistance as Inductance
+v = L di/dt
+V cos wt = L di/dt = L (Iw cos wt) = wLI cos wt
+V = wLI (voltage is forward phase to current)
+V/I = wL = XL
+therefore XL = wL
+
+
+the AC impedance, resistance as Capacitance
+Q = Cv = CV cos wt
+dQ = i dt
+i = dQ / dt
+I sin wt = dQ/dt = C dv/dt = -wCV sin wt
+I = -C Vw (current is backward phase from voltage)
+-1/wC = V/I = XC
+therefore XC = -1/wC
+
+eof
