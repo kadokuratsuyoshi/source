@@ -1,0 +1,25 @@
+fourier.txt
+
+Fourier's diffusion spread equation
+dT/dt = a d^2T/dx^2
+
+E = mCT
+dE = mCdT
+
+E = Wt = QSt
+dE =dQ S dt
+
+mCdT = dQ S dt
+
+dT/dt = dQ S/(mC) = dQ S/(p S dx C) = dQ / (p dx C) = 1/pC dQ/dx
+
+Fourier's law
+dQ = -k dT/dx
+
+dT/dt = 1/pC d/dx (-k dT/dx)
+      = 1/pC d^2/dx^2 (-k dT)
+      = -k/pC d^2/dx^2 T
+
+a = -k/pC
+
+therefore dT/dt = a d^2T/dx^2
