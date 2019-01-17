@@ -1,0 +1,4 @@
+#!/bin/bash
+g++ -o plot plot.cpp
+plot > out
+gnuplot plot.plt
