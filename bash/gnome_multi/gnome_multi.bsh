@@ -1,5 +1,5 @@
 #!/bin/bash -f
 gnome-terminal \
---tab -t Job_01 -e "sh -c 'echo Job_01;exec bash'" \
---tab -t Job_02 -e "sh -c 'echo Job_02;exec bash'" \
---tab -t Job_03 -e "sh -c 'echo Job_03;exec bash'"
+--tab -t, Job_01 -e, "sh -c 'echo Job_01;exec bash'" \
+--tab -t, Job_02 -e, "sh -c 'echo Job_02;exec bash'" \
+--tab -t, Job_03 -e, "sh -c 'echo Job_03;exec bash'"
