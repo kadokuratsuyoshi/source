@@ -19,7 +19,7 @@ Ae : effective cross-section area of core
 Np : primary number of turns
 Ns : secondary number of turns
 
-V = - Phi/dt (Lentzs's law, Phi=BS)
+V = - dPhi/dt (Lentzs's law, Phi=BS)
 Vt = -Phi = -BS
 V/S = - B/t
 V/(r^2) = -B/t (r^2=S)
