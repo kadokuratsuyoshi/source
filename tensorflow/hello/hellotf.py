@@ -8,7 +8,7 @@ import multiprocessing as mp
         intra_op_parallelism_threads=core_num )
     sess = tf.Session(config=config)
 
-    hello = tf.constant('Hello, World!!')
+    hello = tf.constant('hello, world')
     print sess.run(hello)
 
     a = tf.constant(10)
