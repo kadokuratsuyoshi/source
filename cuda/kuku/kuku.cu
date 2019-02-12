@@ -6,9 +6,9 @@
 __global__ void kernel(int* target){
     int id = blockIdx.x * blockDim.x + threadIdx.x;
 
-	if ( id < (HIGHT*WIDTH) ) {
-    	target[blockIdx.x*blockDim.x + threadIdx.x] = (blockIdx.x + 1) * (threadIdx.x + 1);
-	}
+    if ( id < (HIGHT*WIDTH) ) {
+        target[blockIdx.x*blockDim.x + threadIdx.x] = (blockIdx.x + 1) * (threadIdx.x + 1);
+    }
 }
 
 int main(){
