@@ -18,8 +18,8 @@ int main(void){
 	double t;
 	double dt;
 
-	x = 10.0;
-	y = 7.0;
+	x = 10.0;  // predtori
+	y = 7.0;   // prede
 	dx0 = 0.0;
 	dy0 = 0.0;
 	dx1 = 0.0;
