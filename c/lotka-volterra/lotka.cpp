@@ -1,4 +1,4 @@
-// Lotka-Volterra equation
+// Lotka-Volterra equations
 #include <iostream>
 
 using namespace std;
@@ -18,8 +18,8 @@ int main(void){
 	double t;
 	double dt;
 
-	x = 10.0;  // predtori
-	y = 7.0;   // prede
+	x = 10.0;  // prey
+	y = 7.0;   // predator
 	dx0 = 0.0;
 	dy0 = 0.0;
 	dx1 = 0.0;
