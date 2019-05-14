@@ -1,0 +1,4 @@
+awk -f phs.awk > phs.gpi
+gnuplot phs.gpi
+magick convert out_*.png phs.gif
+rem #convert -loop 0 -delay 50 -out_*.png phs.gif
