@@ -307,7 +307,7 @@ int main(int argc, char *argv[])
 
 	outputfile = fopen("status.txt", "w");
 	if ( outputfile == NULL ) {
-		printf("cannot file\n");
+		printf("cannot open file %s\n", argv[1]);
 		exit(1);
 	}
 	t1 = time(NULL);
