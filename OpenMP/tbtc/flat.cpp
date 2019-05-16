@@ -1,5 +1,5 @@
 /*
-    filename:   vflat.cpp
+    filename:   flat.cpp
     contents:   output flatness of velocity field by wavenumber
     make:       >g++ -fopenmp vflat.cpp fft.o -o vflat
     author:     1643002, T.Kadokura, kadokura@uec.hs.ac.jp
