@@ -21,6 +21,7 @@ k = 1.0
 m = 1.0
 a = 1.0
 while t <= N do
+    print t, " ", x, " ", v, "\n"
     k1 = [
             rk_v(t, x, v) * dt, 
             rk_a(t, x, v) * dt
@@ -42,5 +43,4 @@ while t <= N do
     x = x + dx 
     v = v + dv
     t = t + dt
-    print t, " ", x, " ", v, "\n"
 end
