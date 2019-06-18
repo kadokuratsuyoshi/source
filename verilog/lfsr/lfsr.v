@@ -6,8 +6,8 @@ module lfsr (out, clk, rst);
 	wire	fb;
 	assign	fb = ~(out[3] ^ out[2]);
 
-	always @(posedge clk or posedge rst) begin
-		if (rst) begin
+	always @(posedge clk) begin
+		if (!rst) begin
 			out <= 4'b0;
 		end
 		else begin
