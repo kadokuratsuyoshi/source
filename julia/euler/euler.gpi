@@ -1,0 +1,4 @@
+#set yrange[0.0:1.5] 
+plot 'out0' using 1:2 with lines, \
+    'out0' using 1:3 with lines
+pause -1
