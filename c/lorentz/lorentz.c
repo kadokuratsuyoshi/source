@@ -35,6 +35,7 @@ int main(void) {
 	fp = fopen("lorenz.dat", "w");
 	gp = popen("gnuplot -persist", "w");
 	for(i = 0 ; i < n ; i++){
+		fprintf(fp, "%lf\t%lf\t%lf\n", xn, yn, zn);
 		kf[0] = dt * f(x0, y0);
 		kg[0] = dt * g(x0, y0, z0);
 		kh[0] = dt * h(x0, y0, z0);
@@ -50,7 +51,6 @@ int main(void) {
 		xn = x0 + (kf[0] + 2.0*(kf[1]+kf[2]) + kf[3])/6.0;
 		yn = y0 + (kg[0] + 2.0*(kg[1]+kg[2]) + kg[3])/6.0;
 		zn = z0 + (kh[0] + 2.0*(kh[1]+kh[2]) + kh[3])/6.0;
-		fprintf(fp, "%lf\t%lf\t%lf\t\n", xn, yn, zn);
 		x0 = xn;
 		y0 = yn;
 		z0 = zn;
