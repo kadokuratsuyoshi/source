@@ -7,7 +7,6 @@
 using Plots
 anim=Animation()
 f(x,t)=sin(10x)*exp(-(x-t)*(x-t))
-#x=-2pi:0.1:2pi
 x=[i for i in -2pi:0.1:2pi]
 
 for t in -2pi:0.1:2pi
