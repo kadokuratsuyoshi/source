@@ -19,5 +19,5 @@ p = 0.5
 prob = ODEProblem(ode,u0,tspan, p)
 sol = solve(prob)
 using Plots
-#plot(sol)
 plot(sol,label=["x(t)" "v(t)"])
+# eof
