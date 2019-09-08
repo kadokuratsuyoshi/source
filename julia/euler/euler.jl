@@ -1,7 +1,7 @@
-#
-#	program:	euler.jl
-#	contents:	numerical solution of m(d^2/dt^2)x=-kx-av by Euler method
-#
+#=
+	program:	euler.jl
+	contents:	numerical solution of m(d^2/dt^2)x=-kx-av by Euler method
+=#
 function euler()
 	t = 0.0
 	dt = 0.01
