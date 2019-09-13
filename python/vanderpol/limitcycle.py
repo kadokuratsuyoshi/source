@@ -1,8 +1,8 @@
 '''
-    program:    ode3.py
-    contents:   to solve the Van Der Pal equation
+    program:    limitcycle.py
+    contents:   to solve the Van der Pol equation
     make:       
-    usage:      python ode3.py
+    usage:      python limitcycle.py
     
     x'' + u(x^2-1)x' + x = 0, u = 1
     x'' = -(x^2-1)x' - x
