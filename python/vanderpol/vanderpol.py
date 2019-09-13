@@ -1,6 +1,6 @@
 '''
-    program:    ode3.py
-    contents:   to solve the Van Der Pal equation
+    program:    vanderpol.py
+    contents:   to solve the Van der Pol equation
     make:       
     usage:      python ode3.py
     
@@ -26,7 +26,6 @@ def diff(data, dummy):
 
 result = odeint(diff, data_0, t)
 print(result)
-#plt.plot(xdata=data[1],ydata=data[0])
 #plt.plot(result)
 #plt.show()
 # eof
