@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+python vanderpol.py > out_vdp
+perl vanderpol.pl > out_vanderpol
+gnuplot vanderpol.gpi
