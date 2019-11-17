@@ -12,11 +12,11 @@ public class euler {
         double a = 1.0;
 
         for (t=0; t<10; t=t+dt ) {
+            System.out.printf("%f %f %f\n", t, x, v);
             dx = v * dt;
             dv = (-1.0*(k/m)*x - (a/m)*v) * dt;
             x = x + dx;
             v = v + dv;
-            System.out.printf("%f %f %f\n", t, x, v);
         }
     }
 }
