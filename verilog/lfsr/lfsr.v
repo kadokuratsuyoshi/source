@@ -1,4 +1,4 @@
-//	8bit linear feedback shift register
+//	4bit linear feedback shift register
 module lfsr (out, clk, rst);
 
 	output	reg [3:0] out;
