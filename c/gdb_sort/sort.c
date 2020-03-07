@@ -43,10 +43,11 @@ void swap(int *a, int *b){
 	*a = *b;
 	*b = w;
 }
-int main(void) {
-	int i, j, n, w;
 
-	n = sizeof a / sizeof a[0];
+int main(void) {
+	int i, j;
+	int n = sizeof a / sizeof a[0];
+	
 	printa();
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
