@@ -1,6 +1,6 @@
 /*
 	program:	ens.cpp
-	contents:	ens.cpp for tb1c.cpp
+	contents:	filtering the enstrophy spectrum from the turbulence flow
 	make:		g++ -fopenmp ens.cpp fft.cpp -o ens.exe
 	usage:		ens input-data
 */
