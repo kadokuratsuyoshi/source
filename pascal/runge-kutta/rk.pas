@@ -24,6 +24,7 @@ begin
     x := 1.0;
     v := 0.0;
     for i:=0 to tmax do begin
+        writeln(t, ' ', x, ' ', v);
         k1[0] := rk_v(t, x, v) * dt;
         k1[1] := rk_a(t, x, v) * dt;
         ct := t + dt/2.0;
@@ -44,7 +45,6 @@ begin
         dv := (k1[1]+2.0*k2[1]+2.0*k3[1]+k4[1]) / 6.0;
         x := x + dx;
         v := v + dv;
-        t := t + dt;
-        writeln(t, ' ', x, ' ', v)
+        t := t + dt
     end
 end.
