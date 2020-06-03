@@ -7,11 +7,11 @@ dx = 0.0
 dv = 0.0
 k = 1.0
 m = 1.0
-a = 1.0
+gamma = 1.0
 for t in range(n):
-    print("%f %f %f" % (nt, x, v))
+    print("%f %f %f" % (t, x, v))
     dx = v * dt
-    dv = (-1.0 * (k/m) * x - (a/m) * v) * dt
+    dv = ( (-k*x)/m - (gamma*v)/m ) * dt
     x = x + dx
     v = v + dv
-    nt = t * dt
+    t = t * dt
