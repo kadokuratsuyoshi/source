@@ -23,6 +23,7 @@ fvariable q
 	0.0e p f!
     	0.0e q f!
 	1000 0 do 
+		cr t f@ t f. x f@ x f. v f@ x f.
 		v f@ dt f@ f* dx f!
 		-1.0e k f@ f* m f@ f/ x f@ f* p f!
 		a f@  m f@ f/ v f@ f* q f!
@@ -30,6 +31,5 @@ fvariable q
 		x f@ dx f@ f+ x f!
 		v f@ dv f@ f+ v f!
 		t f@ dt f@ f+ t f!
-		cr t f@ t f. x f@ x f. v f@ x f.
 	loop
 ;
