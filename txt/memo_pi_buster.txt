@@ -85,6 +85,10 @@ $ cd tf_pi
 $ python3 -m pip install virtualenv
 $ /home/pi/.local/bin/virtualenv env
 $ 
+$ python3
+import tensorflow as tf
+print(tf.__version__)
+print(tf.keras.__version__)
 
 # eog (gif viewer)
 $ sudo apt-get install eog
@@ -131,6 +135,7 @@ alias cp='cp -i'
 # .vimrc
 set number
 set tabstop=4
+set ignorecase
 syntax on
 
 # .gnuplot
@@ -153,7 +158,6 @@ ssh -X user@xxx.xxx.xxx.xxx
 # Puzzle Bobble
 $ sudo apt install frozen-bubble
 
-# Invaders
-$ sudo apt-get install ninvaders
+
 
 # eof
