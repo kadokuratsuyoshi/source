@@ -2,6 +2,7 @@
 #	filename:	memo_pi.txt
 #	contents:	Raspberry Pi install package for Physical Review Journal(PRA)
 #
+
 # XRDP
 $ sudo apt-get install xrdp
 
@@ -104,11 +105,19 @@ $ sudo apt-get install gtkwave
 $ sudo apt-get install bc
 
 # nkf
-$ sudo apt-get nkf
+$ sudo apt-get install nkf
 >nkf -g					check file type
 >nkf -w --overwrite		change to UTF-8
 >nkf -s --overwrite		change to Shift-JIS
 >nkf -e --overwrite		change to EUC-JP
+
+# assembler
+$ sudo apt-get install nasm
+
+# GAMEs
+# Puzzle Bobble
+$ sudo apt install frozen-bubble
+
 
 
 # .bashrc
@@ -153,10 +162,6 @@ lsb_release -a
 # golab
 #!/bin/bash
 ssh -X user@xxx.xxx.xxx.xxx
-
-# GAMEs
-# Puzzle Bobble
-$ sudo apt install frozen-bubble
 
 
 
