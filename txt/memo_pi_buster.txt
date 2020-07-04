@@ -111,8 +111,27 @@ $ sudo apt-get install nkf
 >nkf -s --overwrite		change to Shift-JIS
 >nkf -e --overwrite		change to EUC-JP
 
-# assembler
-$ sudo apt-get install nasm
+# Hello, World as assembler
+$ vi hello.s
+  .data
+msg:
+  .asciz "hello, world"
+  .balign 4
+return:
+  .word   0
+  .text
+  .global main
+main:
+  ldr     r1, =return
+  str     lr, [r1]
+  ldr     r0, =msg
+  bl      puts
+  ldr     r1, =return
+  str     lr, [r1]
+  bx      lr
+  .global puts
+$ as -o hello.o hello.s
+$ gcc -o hello hello.o
 
 # GAMEs
 # Puzzle Bobble
