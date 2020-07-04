@@ -1,6 +1,6 @@
 #
 #	filename:	memo_pi.txt
-#	contents:	Raspberry Pi install package for Physical Review Journal(PRA)
+#	contents:	Raspberry Pi install package for Physical Review Journals American Society (PRA)
 #
 
 # XRDP
