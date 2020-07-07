@@ -163,7 +163,10 @@ alias cp='cp -i'
 # .vimrc
 set number
 set tabstop=4
+set shiftwidth=4
 set ignorecase
+set hlsearch
+set smartindent
 syntax on
 
 # .gnuplot
