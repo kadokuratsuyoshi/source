@@ -20,7 +20,7 @@ k2 = [0, 1]
 k3 = [0, 1]
 k4 = [0, 1]
 for t in range(n):
-    print("%f %f %f" % (nt, x, v))
+    print("%f %f %f" % (t, x, v))
     k1[0] = rk_v( t, x, v ) * dt
     k1[1] = rk_a( t, x, v ) * dt
     k2[0] = rk_v( t+dt/2.0, x+k1[0]/2.0, v+k1[1]/2.0) * dt
@@ -33,4 +33,4 @@ for t in range(n):
     dv = (k1[1] + 2.0*k2[1] + 2.0*k3[1] + k4[1]) / 6.0
     x = x + dx
     v = v + dv
-    nt = t * dt
+    t = t + dt
