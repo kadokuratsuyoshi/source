@@ -6,9 +6,10 @@ double rk_v(double t,double x,double v) {
 
 double rk_a(double t,double x,double v) {
     double k, m, a;
-    	k = 1.0;
-	m = 1.0;
-	a = 1.0;
+
+    k = 1.0;
+    m = 1.0;
+    a = 1.0;
     return ( (-k*x - a*v)/m );
 }
 
