@@ -28,7 +28,7 @@ $ sudo reboot
 $ sudo apt-get install vim
 
 # GNOME-TERMINAL
-$ sudo apt-get gnome-terminal
+$ sudo apt-get install gnome-terminal
 $ vi x
 #!/bin/bash
 gnome-terminal --hide-menubar --geometry 120x38+100+40 &
