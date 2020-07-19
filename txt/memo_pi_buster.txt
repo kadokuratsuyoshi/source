@@ -73,13 +73,12 @@ $ sudo pip3 install matplotlib==3.1.3
 $ sudo pip3 install pandas==1.0.1
 $ sudo pip3 install seaborn==0.10.0
 $ sudo pip3 install tensorflow
-### $ sudo pip3 install keras
 $ sudo pip3 install flask flask_cors -U
 $ sudo pip3 install opencv-python==4.1.1.26
+$ sudo pip3 install keras==2.2.4
 $ echo "export LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libatomic.so.1" | tee -a ~/.bashrc
 $ source ~/.bashrc
 $ sudo apt install libatlas-base-dev
-### $
 $ cd ~/Desktop
 $ mkdir tf_pi
 $ cd tf_pi
@@ -88,8 +87,16 @@ $ /home/pi/.local/bin/virtualenv env
 $ 
 $ python3
 import tensorflow as tf
+import keras
 print(tf.__version__)
 print(tf.keras.__version__)
+print(keras.__version__)
+
+$ sudo vi /etc/dphys-swapfile
+#CONF_SWAPFILE=100
+CONF_SWAPFILE=1024
+$ sudo /etc/init.d/dphys-swapfile restart
+$ swapon -s
 
 # eog (gif viewer)
 $ sudo apt-get install eog
@@ -143,7 +150,7 @@ $ sudo apt install frozen-bubble
 #==========
 # Prompt
 #==========
-PS1='[\[\033[0;32m\]\u\[\033[0;00m\]@\[\033[0;34m\]\h \[\033[0;00m\]\W \!]\$ '
+PS1='[\[\033[0;32m\]\u\[\033[0;00m\]@\[\033[0;36m\]\h \[\033[0;00m\]\W \!]\$ '
 #==========
 # PATH
 #==========
@@ -167,6 +174,7 @@ set shiftwidth=4
 set ignorecase
 set hlsearch
 set smartindent
+set laststatus=2
 syntax on
 
 # .gnuplot
@@ -185,6 +193,13 @@ lsb_release -a
 #!/bin/bash
 ssh -X user@xxx.xxx.xxx.xxx
 
+# WiFi
+$ ifdown wlan0
+$ ifup wlan0
+$ lsusb
+$ ifconfig
+$ iwconfig
+$ wpa_passphrase SSID password
 
 
 # eof
