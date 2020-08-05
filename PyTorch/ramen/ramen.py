@@ -64,12 +64,6 @@ model = nn.Linear(397, 1)
 
 # 損失関数
 loss = nn.MSELoss()
-
-# 最適化関数
-optimizer = torch.optim.SGD(model.parameters(), lr=0.6)
-
-# 損失関数
-loss = nn.MSELoss()
  
 # 最適化関数
 optimizer = torch.optim.SGD(model.parameters(), lr=0.6)
