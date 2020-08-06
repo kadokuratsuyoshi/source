@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #-*- coding:utf-8 -*-
 # to solve x^2=2, x=sqrt(2), -sqrt(2)
+# optimizing by the variational method, delta f(x) = 0
 # https://blog2.cct-inc.co.jp/blog/machine-learning/pytorch/
 
 import torch
