@@ -1,0 +1,4 @@
+set xlabel "prey"
+set ylabel "predator"
+plot 'out00' using 2:3 with lines
+pause -1
