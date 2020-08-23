@@ -8,7 +8,7 @@ int main(void)
 	double t;
 	double x = 10.0;	// prey
 	double y = 7.0;		// predator
-	double dx0=0.0, dy0=0.0, dx1=0.0, dy1=0.0;
+	double dx0, dy0, dx1, dy1;
 	double dxdt0, dydt0, dxdt1, dydt1;
 	double a = 8.0;
 	double b = 3.0;
