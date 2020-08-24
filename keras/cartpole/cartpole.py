@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+#-*- coding:utf-8 -*-
 # sample program of the cart-pole problems
 import numpy as np
 import gym
