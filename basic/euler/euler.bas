@@ -9,7 +9,7 @@
   180   PRINT #1, T; X; V
   190   PRINT T;X;V
   200   DX = V * DT
-  210   DV = (-  1!*(K/M)*X - (A/M)*V)*DT
+  210   DV = ( (-K*X - A*V)/M ) * DT
   220   X = X + DX
   230   V = V + DV
   240   T = T + DT
