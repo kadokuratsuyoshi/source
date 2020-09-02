@@ -5,13 +5,14 @@
   140 K = 1
   150 M = 1
   160 A = 1
-  170 FOR T=0 TO 10 STEP 0.01
-  180   DX = V * DT
-  190   DV = (-  1!*(K/M)*X - (A/M)*V)*DT
-  200   X = X + DX
-  210   V = V + DV
-  220   PRINT #1, T; X; V
-  230   PRINT T;X;V
-  240 NEXT
-  250 CLOSE #1
-  260 END
+  170 FOR I=0 TO 1000 STEP 1
+  180   PRINT #1, T; X; V
+  190   PRINT T;X;V
+  200   DX = V * DT
+  210   DV = (-  1!*(K/M)*X - (A/M)*V)*DT
+  220   X = X + DX
+  230   V = V + DV
+  240   T = T + DT
+  250 NEXT
+  260 CLOSE #1
+  270 END
