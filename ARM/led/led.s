@@ -1,7 +1,3 @@
-@ blink.s
-@ D. Thiebaut
-@ based on the following C program:
-@	
 @ #include <wiringPi.h>
 @ #include <stdio.h>
 @ #include <stdlib.h>
