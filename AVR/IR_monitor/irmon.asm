@@ -1,7 +1,7 @@
 ;
-;	progname:	remmon.asm
+;	progname:	irmon.asm
 ;	contents:	IR remote controller monitor using by PhotoDiode(PD)
-;	make:		avrasm32 -fI remmon.asm -l remmon.lst
+;	make:		avrasm32 -fI irmon.asm -l irmon.lst
 ;	CPU:		AT90S1200
 ;	usage:
 ;
