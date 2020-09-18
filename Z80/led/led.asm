@@ -11,8 +11,10 @@ RESET:
         out     PIOAC,a
         ld      a,0
         ld      b,0
-MAIN:  inc     a
+MAIN:
+        inc     a
         out     PIOAD,a
-DELAY:  inc     b
+DELAY:
+        inc     b
         jp      nz,DELAY
         jp      MAIN
