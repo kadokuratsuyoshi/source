@@ -29,9 +29,9 @@
 		rjmp	ana_comp        ; ana_comp
 
 reset:
-		sbi		DDRB, 5
-		ldi		temp, (1<<ACIE)
-		out		ACSR, temp
+		sbi	DDRB, 5
+		ldi	temp, (1<<ACIE)
+		out	ACSR, temp
 		sei
 main:
 		nop
@@ -39,11 +39,11 @@ main:
 
 ana_comp:
 		cli
-		in		temp, ACSR
+		in	temp, ACSR
 		sbrs	temp, ACO
-		sbi		PORTB, 5
+		sbi	PORTB, 5
 		sbrc	temp, ACO
-		cbi		PORTB, 5
+		cbi	PORTB, 5
 		sei
 		reti
 ;		end
