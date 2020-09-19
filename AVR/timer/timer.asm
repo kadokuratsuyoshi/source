@@ -22,11 +22,11 @@
 .org 0000
 		rjmp	reset			; reset
 .org 0001
-		reti					; ext_int0
+		reti				; ext_int0
 .org 0002
 		rjmp	tim0_ovf 		; tim0_ovf
 .org 0003
-		reti					; ana_comp
+		reti				; ana_comp
 
 reset:
 		sbi		DDRB, 0
