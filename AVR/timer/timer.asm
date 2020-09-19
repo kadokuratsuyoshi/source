@@ -1,13 +1,13 @@
 ;
-;	progname:	led.asm
-;	contents:	led blinking
-;	make:		avrasm32.exe -fl led.asm -l led.lst
+;	progname:	timer.asm
+;	contents:	over-flow timer interrupt for led blinking
+;	make:		avrasm32.exe -fl timer.asm -l timer.lst
 ;
 ;           /RESET VCC-----------------VCC
 ;           PD0    PB7(SCK)
 ;           PD1    PB6(MISO)
 ; 10MHz-----XTAL1  PB5(MOSI)
-;   L-------XTAL2  PB4
+;   +-------XTAL2  PB4
 ;     (INT0)PD2    PB3
 ;           PD3    PB2
 ;       (T0)PD4    PB1(AN1)
