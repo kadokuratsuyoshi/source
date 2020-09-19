@@ -34,7 +34,7 @@ reset:
 		out		TCCR0, a
 		ldi		a, $02
 		out		TIMSK, a
-		ldi		a, $0 ;$FF
+		ldi		a, $0
 		out		TCNT0, a
 		sei
 main:
@@ -44,7 +44,7 @@ main:
 tim0_ovf:
 		inc		b
 		out		PORTB, b
-		ldi		a, $0 ;$FF
+		ldi		a, $0
 		out		TCNT0, a
 		reti
 ;		end
