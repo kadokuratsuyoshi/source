@@ -26,25 +26,25 @@
 .org 0000
 		rjmp	reset           ; reset
 .org 0001
-		reti                  ; ext_int0
+		reti                    ; ext_int0
 .org 0002
-		rjmp  tim0_ovf        ; tim0_ovf
+		rjmp	tim0_ovf        ; tim0_ovf
 .org 0003
 		rjmp	ana_comp        ; ana_comp
 
 reset:
 		; PORTB
-		sbi		DDRB, 2 ;DDRB, 5
+		sbi	DDRB, 2 ;DDRB, 5
 		; analog comparator
-		ldi		temp, (1<<ACIE)
-		out		ACSR, temp
+		ldi	temp, (1<<ACIE)
+		out	ACSR, temp
 		; timer
-		ldi		a, $05
-		out		TCCR0, a
-		ldi		a, $02
-		out		TIMSK, a
-		ldi		a, $10
-		out		TCNT0, a
+		ldi	a, $05
+		out	TCCR0, a
+		ldi	a, $02
+		out	TIMSK, a
+		ldi	a, $10
+		out	TCNT0, a
 		; enable interrupt
 		sei
 main:
@@ -54,21 +54,21 @@ main:
 tim0_ovf:
 		sbrs	c, 0
 		reti
-		inc		b
-		out		PORTB, b
-		ldi		a, $10
-		out		TCNT0, a
+		inc	b
+		out	PORTB, b
+		ldi	a, $10
+		out	TCNT0, a
 		reti
 
 ana_comp:
 		cli
-		in		temp, ACSR
+		in	temp, ACSR
 		sbrs	temp, ACO
-		ldi		c, 1
+		ldi	c, 1
 		sbrc	temp, ACO
-		ldi		c, 0 
-		ldi		b, 0
-		out		PORTB, b	; FET off
+		ldi	c, 0 
+		ldi	b, 0
+		out	PORTB, b	; FET off
 		sei
 		reti
 ;		end
