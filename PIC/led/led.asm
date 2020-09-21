@@ -29,27 +29,27 @@
 	loop1,loop2
 	ENDC
 
-    ORG		00H
+    	ORG	00H
 	GOTO	reset
-	ORG		04H
+	ORG	04H
 	GOTO	intr
 
 reset:
-	BSF		STATUS, RP0		; RAM Bank 1
+	BSF	STATUS, RP0		; RAM Bank 1
 	CLRF	TRISA			; All pins Port A output
 	CLRF	TRISB			; All pins Port B output
 	CLRF	TRISC			; All pins Port C output
 	MOVLW	06H
 	MOVWF	ADCON1			; ALL pins digital I/O
-	BCF		STATUS, RP0		; RAM Bank 1
+	BCF	STATUS, RP0		; RAM Bank 1
 	CLRF	PORTA			; Initialize Port A
 	CLRF	PORTB			; Initialize Port B
 	CLRF	PORTC			; Initialize Port C
 
 main:
-	BSF		PORTA, 0		; LED on
+	BSF	PORTA, 0		; LED on
 	CALL	delay
-	BCF		PORTA, 0		; LED off
+	BCF	PORTA, 0		; LED off
 	CALL	delay
 	GOTO	main
 
@@ -60,7 +60,6 @@ lp1:
 	MOVLW	D'128'
 	MOVWF	loop2
 lp2:
-	NOP
 	NOP
 	DECFSZ	loop2, F
 	GOTO	lp2
