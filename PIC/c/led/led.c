@@ -4,7 +4,7 @@
 	make:		ccsc led.c
 	device:		PIC16F84A-20/P
 
-	          1:RA2     RA1:18
+              1:RA2     RA1:18
               2:RA3     RA0:17------>|----R(330)---GND
               3:RA4/TD OSC1:16-----X'tal(10MHz)
  +5V--R(10k)--4:/MCLR  OSC2:15-----+
