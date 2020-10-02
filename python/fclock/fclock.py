@@ -3,7 +3,7 @@
 #	contents:	clock display with frequency counter
 #	usage:		python fclock.py
 #	install:	sudo pip3 install pyaudio (Raspberry Pi)
-#				conda install pyaudio (Windows 10)
+#			conda install pyaudio (Windows 10)
 #
 import pyaudio
 import datetime
@@ -34,7 +34,7 @@ for index in range(0, p.get_device_count()):
 	print(p.get_device_info_by_index(index))
 
 stream = p.open(format = pyaudio.paFloat32,
-	channels = 1,	# monoral
+	channels = 1,	# mono
 	rate = RATE,	# sampling rate
 	frames_per_buffer = 1024,
 #	output_device_index = 5,
