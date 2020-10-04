@@ -2,8 +2,9 @@
 #	program:	fclock.py
 #	contents:	clock display with frequency counter
 #	usage:		python fclock.py
+#			pc audio output -> frequency counter (000,000Hz - 235,950Hz(00:00:0 - 23:59:5))
 #	install:	sudo pip3 install pyaudio (Raspberry Pi)
-#				conda install pyaudio (Windows 10)
+#			conda install pyaudio (Windows 10)
 #
 import pyaudio
 import datetime
