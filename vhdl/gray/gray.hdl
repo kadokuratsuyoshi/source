@@ -1,0 +1,26 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity gray is
+	Port (
+		DO	:	out	std_logic;
+		CLK : 	in	std_logic;
+		RST :	in	std_logic;
+	);
+end gray;
+
+architecture Behavioral of gray is
+	signal	CNT : std_logic_vector(3 downto 0);
+begin
+	process ( RST, CLK )
+	begin
+		if ( RST = '0' ) then
+			CNT <= (others => '0') ;
+		elseif rising_edge( CLK ) then
+			CNT <= CNT + '1';
+		end if;
+	end process;
+	DO <= {CNT[3], CNT[3:1] ^ CNT[2:0]}; 
+end Behavioral;
