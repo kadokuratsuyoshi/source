@@ -4,16 +4,16 @@ use	Ada.Text_IO,
 	Ada.Float_Text_IO;
 
 procedure euler is
-	t, dt, x, v, dx, dv, k, m, a: Float;
+	t, x, v, dt, dx, dv, k, m, gamma: Float;
 
 begin
 	t := 0.0;
-	dt := 0.01;
 	x := 1.0;
 	v := 0.0;
+	dt := 0.01;
 	k := 1.0;
 	m := 1.0;
-	a := 1.0;
+	gamma := 1.0;
 	loop
 		Put(Item => Float'Adjacent(t, Float'First));
 		Put(" ");
@@ -22,7 +22,7 @@ begin
 		Put(Item => Float'Adjacent(v, Float'First));
 		Put_Line("");
 		dx := v * dt;
-		dv := (-1.0*(k/m)*x - (a/m)*v) * dt;
+		dv := (-k*x-gamma*v)/m * dt;
 		x := x + dx;
 		v := v + dv;
 		t := t + dt;
