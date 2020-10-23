@@ -7,12 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int    sgm = 10;
+int    sigma = 10;
 int    r   = 28;
 double b   = 8.0/3.0;
 
 double f(double x, double y) {
-	return ( sgm*(-x + y) );
+	return ( sigma*(-x + y) );
 }
 double g(double x, double y, double z) {
 	return ( r*x - y - x*z );
@@ -23,9 +23,9 @@ double h(double x, double y, double z) {
 
 int main(void) {
 	int i, n;
-	double x0, y0, z0, xn, yn, zn;
-	double dt, kf[4], kg[4], kh[4];
-	FILE *fp, *gp;
+	double x0, y0, z0, x, y, z;
+	double dt, df[4], dg[4], dh[4];
+	FILE *fp, *pp;
 
 	x0 = 1.0;
 	y0 = 1.0;
@@ -33,31 +33,31 @@ int main(void) {
 	dt = 0.001;
 	n  = 200000;
 	fp = fopen("lorenz.dat", "w");
-	gp = popen("gnuplot -persist", "w");
+	pp = popen("gnuplot -persist", "w");
 	for(i = 0 ; i < n ; i++){
-		fprintf(fp, "%lf\t%lf\t%lf\n", xn, yn, zn);
-		kf[0] = dt * f(x0, y0);
-		kg[0] = dt * g(x0, y0, z0);
-		kh[0] = dt * h(x0, y0, z0);
-		kf[1] = dt * f(x0+kf[0]/2.0, y0+kg[0]/2.0);
-		kg[1] = dt * g(x0+kf[0]/2.0, y0+kg[0]/2.0, z0+kh[0]/2.0);
-		kh[1] = dt * h(x0+kf[0]/2.0, y0+kg[0]/2.0, z0+kh[0]/2.0);
-		kf[2] = dt * f(x0+kf[1]/2.0, y0+kg[1]/2.0);
-		kg[2] = dt * g(x0+kf[1]/2.0, y0+kg[1]/2.0, z0+kh[1]/2.0);
-		kh[2] = dt * h(x0+kf[1]/2.0, y0+kg[1]/2.0, z0+kh[1]/2.0);
-		kf[3] = dt * f(x0+kf[2], y0+kg[2]);
-		kg[3] = dt * g(x0+kf[2], y0+kg[2], z0+kh[2]);
-		kh[3] = dt * h(x0+kf[2], y0+kg[2], z0+kh[2]);
-		xn = x0 + (kf[0] + 2.0*(kf[1]+kf[2]) + kf[3])/6.0;
-		yn = y0 + (kg[0] + 2.0*(kg[1]+kg[2]) + kg[3])/6.0;
-		zn = z0 + (kh[0] + 2.0*(kh[1]+kh[2]) + kh[3])/6.0;
-		x0 = xn;
-		y0 = yn;
-		z0 = zn;
+		fprintf(fp, "%lf\t%lf\t%lf\n", x, y, z);
+		df[0] = dt * f(x0,           y0);
+		dg[0] = dt * g(x0,           y0,           z0);
+		dh[0] = dt * h(x0,           y0,           z0);
+		df[1] = dt * f(x0+df[0]/2.0, y0+dg[0]/2.0);
+		dg[1] = dt * g(x0+df[0]/2.0, y0+dg[0]/2.0, z0+dh[0]/2.0);
+		dh[1] = dt * h(x0+df[0]/2.0, y0+dg[0]/2.0, z0+dh[0]/2.0);
+		df[2] = dt * f(x0+df[1]/2.0, y0+dg[1]/2.0);
+		dg[2] = dt * g(x0+df[1]/2.0, y0+dg[1]/2.0, z0+dh[1]/2.0);
+		dh[2] = dt * h(x0+df[1]/2.0, y0+dg[1]/2.0, z0+dh[1]/2.0);
+		df[3] = dt * f(x0+df[2],     y0+dg[2]);
+		dg[3] = dt * g(x0+df[2],     y0+dg[2],     z0+dh[2]);
+		dh[3] = dt * h(x0+df[2],     y0+dg[2],     z0+dh[2]);
+		xn = x0 + (df[0] + 2.0*(df[1]+df[2]) + df[3])/6.0;
+		yn = y0 + (dg[0] + 2.0*(dg[1]+dg[2]) + dg[3])/6.0;
+		zn = z0 + (dh[0] + 2.0*(dh[1]+dh[2]) + dh[3])/6.0;
+		x0 = x;
+		y0 = y;
+		z0 = z;
 	}
 	fclose(fp);
-	fprintf(gp, "splot \"lorenz.dat\" w l\n");
-	pclose(gp);
+	fprintf(pp, "splot \"lorenz.dat\" w l\n");
+	pclose(pp);
 	return 0;
 }
 // eof
