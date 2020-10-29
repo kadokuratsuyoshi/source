@@ -2,6 +2,7 @@
 ;	progname:	ad.asm
 ;	contents:	a/d interrupt for led blinking
 ;	make:		avrasm32.exe -fl ad.asm -l ad.lst
+;	device:		AT90S1200
 ;
 ;           /RESET VCC-----------------VCC
 ;           PD0    PB7(SCK)
