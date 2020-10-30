@@ -1,1 +1,1 @@
-: hello ." hello, world";
+: hello CR ." hello, world" CR ;
