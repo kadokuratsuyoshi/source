@@ -1,17 +1,18 @@
 BEGIN {
     t = 0.0
-    dt = 0.01
     x = 1.0
     v = 0.0
+    dt = 0.01
     dx = 0.0
     dv = 0.0
     k = 1.0
     m = 1.0
-    a = 1.0
-    for (t=dt; t<=10.0; t=t+dt ) {
+    gamma = 1.0
+    for (i=0; i<1000; i++) {
         printf "%f, %f, %f\n", t, x, v
-        dx = v * dt
-        dv = (-1.0*(k/m)*x - v*(a/m)) * dt
+        dx = dt * v
+        dv = dt * ((-k*x-gamma*v)/m)
+        t = t + dt
         x = x + dx
         v = v + dv
     }
