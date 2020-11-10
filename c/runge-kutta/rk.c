@@ -5,39 +5,38 @@ double rk_v(double t,double x,double v) {
 }
 
 double rk_a(double t,double x,double v) {
-    double k, m, a;
-
-    k = 1.0;
-    m = 1.0;
-    a = 1.0;
-    return ( (-k*x - a*v)/m );
+    double k = 1.0;
+    double m = 1.0;
+    double gamma = 1.0;
+	
+    return ( (-k*x - gamma*v)/m );
 }
 
 int main(void)
 {
-    double tmax, t, dt, x, dx, v, dv;
-    double k1[2], k2[2], k3[2], k4[2];
+    double t=0.0;
+    double x=1.0;
+    double v=0.0;
+    double dt=0.01;
+    double dx, dv;
+    double rdx[4], rdv[4];
+    int i;
 
-    tmax = 10.0;
-    t = 0.0;
-    dt = 0.01;
-    x = 1.0;
-    v = 0.0;
-    while (t<tmax) {
+    for (i=0; i<1000; i++) {
         printf("%f %f %f\n", t, x, v);
-        k1[0] = rk_v(t, x, v) * dt;
-        k1[1] = rk_a(t, x, v) * dt;
-        k2[0] = rk_v(t+dt/2.0,x+k1[0]/2.0,v+k1[1]/2.0) * dt;
-        k2[1] = rk_a(t+dt/2.0,x+k1[0]/2.0,v+k1[1]/2.0) * dt;
-        k3[0] = rk_v(t+dt/2.0,x+k2[0]/2.0,v+k2[1]/2.0) * dt;
-        k3[1] = rk_a(t+dt/2.0,x+k2[0]/2.0,v+k2[1]/2.0) * dt;
-        k4[0] = rk_v(t+dt,x+k3[0],v+k3[1]) * dt;
-        k4[1] = rk_a(t+dt,x+k3[0],v+k3[1]) * dt;
-        dx = (k1[0]+2.0*k2[0]+2.0*k3[0]+k4[0]) / 6.0;
-        dv = (k1[1]+2.0*k2[1]+2.0*k3[1]+k4[1]) / 6.0;
+        rdx[0] = dt * rk_v(t, x, v);
+        rdx[1] = dt * rk_v(t+dt/2, x+rdx[0]/2, v+rdv[0]/2);
+        rdx[2] = dt * rk_v(t+dt/2, x+rdx[1]/2, v+rdv[1]/2);
+        rdx[3] = dt * rk_v(t+dt,   x+rdx[2],   v+rdx[2]);
+        rdv[0] = dt * rk_a(t, x, v);
+        rdv[1] = dt * rk_a(t+dt/2, x+rdx[0]/2, v+rdv[0]/2);
+        rdv[2] = dt * rk_a(t+dt/2, x+rdx[1]/2, v+rdv[1]/2);
+        rdv[3] = dt * rk_a(t+dt,   x+rdx[2],   v+rdv[3]);
+        dx = (rdx[0]+2*rdx[1]+2*rdx[2]+rdx[3]) / 6;
+        dv = (rdv[0]+2*rdv[1]+2*rdv[2]+rdv[3]) / 6;
+	t = t + dt;
         x = x + dx;
         v = v + dv;
-	t = t + dt;
     }
     return 0;
 }
