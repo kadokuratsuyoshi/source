@@ -1,7 +1,7 @@
 ;
 ;	program:	crt0.asm
 ;	contents:	crt0 stands for the C runtime at the very begining
-;	make:	  sdasz80 -a -o -l crt0.asm
+;	make:	  	sdasz80 -a -o -l crt0.asm
 ;	usage:		sdcc foo.c -mz80 --code-loc 0x0100 --no-std-crt0 -Wlcrt0.o
 ;
 	.module crt0
