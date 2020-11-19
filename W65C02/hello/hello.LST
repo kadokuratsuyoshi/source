@@ -1,0 +1,46 @@
+    1                   ;
+    2                   ;       program:        hello.asm
+    3                   ;       contents:       display hello world on W65C02 A
+    4                   ;       make:           >msdos x6502 /H hello.asm,hello
+    5                   ;       usage:          R6000
+    6                   ;
+    7 6000                         ORG      $6000
+    8 FFDC              PRBYTE     EQU      $FFDC
+    9 FFEF              ECHO       EQU      $FFEF
+   10 008D              CR         EQU      $8D         Carriage Return
+   11                   
+   12 6000              START
+   13 6000 200760                  JSR      HELLO
+   14 6003 202460                  JSR      COUNT
+   15 6006 60                      RTS
+   16                   
+   17 6007              HELLO
+   18 6007 A200                    LDX      #0
+   19 6009              L1
+   20 6009 BD1960                  LDA      L3,X
+   21 600C 1006                    BPL      L2
+   22 600E 20EFFF                  JSR      ECHO
+   23 6011 E8                      INX
+   24 6012 D0F5                    BNE      L1
+   25 6014              L2
+   26 6014 0980                    ORA      #$80        ;%1000.0000
+   27 6016 4CEFFF                  JMP      ECHO
+   28 6019              L3
+   29 6019 48454C4C4E20            byte     $48,$45,$4c,$4c,$4e,$20,$57,$4e,$53
+           574E534E44   
+   30                   
+   31 6024              COUNT
+   32 6024 203760                  JSR      L22
+   33 6027 A200                    LDX      #0
+   34 6029              L21
+   35 6029 8A                      TXA
+   36 602A 20DCFF                  JSR      PRBYTE
+   37 602D A920                    LDA      #" "
+   38 602F 20EFFF                  JSR      ECHO
+   39 6032 E8                      INX
+   40 6033 E00A                    CPX      #10
+   41 6035 90F2                    BCC      L21
+   42 6037              L22
+   43 6037 A98D                    LDA      #CR
+   44 6039 4CEFFF                  JMP      ECHO
+   45                   ; eof
