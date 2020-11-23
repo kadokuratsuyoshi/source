@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity gray is
 	Port (
-		DO	:	out	std_logic;
+		DO  :	out	std_logic;
 		CLK : 	in	std_logic;
 		RST :	in	std_logic;
 	);
