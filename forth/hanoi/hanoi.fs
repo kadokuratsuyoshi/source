@@ -8,7 +8,7 @@ variable cnt
     dup >r 0> if
         rot swap r@ 1- recurse
         cnt @ 1+ cnt ! 
-		hanoi-print
+	hanoi-print
         rot r@ 1- recurse
         swap
     then
