@@ -1,0 +1,21 @@
+   10 DIM TRI(100,100)
+   20 FOR I=1 TO 10
+   30   FOR J=1 TO 10
+   40     IF J=1 THEN TRI(I,J)=1:GOTO 90
+   50     IF J=I THEN TRI(I,J)=1:GOTO 100 ELSE GOTO 60
+   60     A = TRI(I-1,J-1)
+   70     B = TRI(I-1,J)
+   80     TRI(I,J)=A+B
+   90   NEXT J
+  100 NEXT I
+  110 '
+  120 FOR I=1 TO 10
+  130   N = (10-I)*3
+  140   PRINT SPACE$(N);
+  150   FOR J=1 TO 10
+  160     PRINT TRI(I,J);
+  180     IF I=J THEN PRINT ;:GOTO 200 ELSE PRINT "   ";
+  190   NEXT J
+  200   PRINT
+  210 NEXT I
+  220 END
