@@ -1,0 +1,235 @@
+;	ＡＤコンバータと１６文字＊２行ＬＣＤの接続
+;
+;	概要
+;	ＡＤコンバータの電圧入力（０−５Ｖ）を
+;	１６＊２液晶に0.000V〜5.000Vで表示する。
+;	表示後はふたたびＡＤ入力を繰り返す。
+;
+;	ＡＤコンバータ入力（単一モード）
+;		AN0(ポート７　0ＣＨ）
+;
+;	液晶接続
+;		データ＝ポート１
+;		Ｅ　　＝ポート２のビット０
+;		ＲＳ　＝ポート２のビット１
+;
+;	液晶接続
+;	Ｈ８マイコン	ＬＣＤ
+;	Ｐ１ー０	Ｄ０
+;	Ｐ１ー１	Ｄ１
+;	Ｐ１ー２	Ｄ２	
+;	Ｐ１ー３	Ｄ３
+;	Ｐ１ー４	Ｄ４
+;	Ｐ１ー５	Ｄ５
+;	Ｐ１ー６	Ｄ６
+;	Ｐ１ー７	Ｄ７
+;	Ｐ２−０	Ｅ
+;	Ｐ２−１	ＲＳ
+;	ＧＮＤ		Ｒ／Ｗ
+;
+;	ソフトウエアのながれ
+;	①リセットベクトルの設定（H'000100からスタート）
+;	②スタックポインタ，Ｉ／Ｏの設定
+;	③ＬＣＤのソフトウエアリセット
+;	④ＬＣＤ初期設定
+;	⑤ＡＤコンバータスタート
+;	⑥ＡＤ入力値を電圧値に変換
+;	⑦２進を表示用１０進に変換
+;	⑧ＬＣＤ表示
+;	⑨再び⑤へもどる。
+
+	.CPU 300HA
+	.SECTION A,DATA,LOCATE=H'000000
+
+;シンボル定義
+LCD_D	.EQU	H'FFF710	;ＬＣＤへのデータを入れるＲＡＭ
+MOJI	.EQU	H'FFF711	;測定結果（１０進電圧値７桁）
+				;を入れるＲＡＭ
+P1_D	.EQU	H'FFFFC2	;ポート１データレジスタ
+				;ＬＣＤのデータ線
+P2_D	.EQU	H'FFFFC3	;ポート２データレジスタ	
+E_SIG	.BEQU	0,P2_D		;Ｅビット（ＬＣＤ）
+RS	.BEQU	1,P2_D		;ＲＳビット（ＬＣＤ）
+
+ADCSR	.EQU	H'FFFFE8	;ＡＤコントロールートレジスタ	
+ADST	.BEQU	5,ADCSR		;ＡＤの開始フラグ
+ADF	.BEQU	7,ADCSR		;ＡＤの測定終了フラグ
+
+ADDRAH	.EQU	H'FFFFE0	;ＡＤデータレジスタＡＨ	
+ADDRAL	.EQU	H'FFFFE1	;ＡＤデータレジスタＡＬ	
+
+;-----リセットベクトル-----
+	.DATA.L	INIT		;リセットベクトル
+;-----スタックとI/Oの設定-----
+	.ORG	H'000100
+INIT:	MOV.L	#H'FFF10,ER7	;スタックポインタ設定
+	MOV.B	#H'FF,R0L	;ポート１、２を出力に設定
+	MOV.B	R0L,@H'FFFFC0	;ポート１
+	MOV.B	R0L,@H'FFFFC1	;ポート２
+	MOV.B	#H'08,R0L	;ＡＤコンバータ設定
+	MOV.B	R0L,@ADCSR	;単一モード、ＡＮ０のみ使用
+;-----ＬＣＤソフトウエアリセット-----
+	JSR	@TIME31		;15mSのＷＡＩＴ	(4mS*4)
+	JSR	@TIME31
+	JSR	@TIME31
+	JSR	@TIME31		
+
+	MOV.B	#B'00110000,R0L	;ＬＣＤファンクションセット1
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+
+	JSR	@TIME31		;4mSのＷＡＩＴ
+
+	MOV.B	#B'00110000,R0L	;ＬＣＤファンクションセット2
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+
+	JSR	@TIME31		;4mSのＷＡＩＴ
+
+	MOV.B	#B'00110000,R0L	;ＬＣＤファンクションセット3
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+;-----ＬＣＤ初期設定----
+	MOV.B	#B'00111000,R0L	;ファンクションセット
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+
+	MOV.B	#B'00001110,R0L	;表示ＯＮ
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+
+	MOV.B	#B'00000110,R0L	;エントリーモード
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+
+	JSR	@TIME31		;4mSのＷＡＩＴ
+
+	MOV.B	#B'00000001,R0L	;表示クリア
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	JSR	@TIME31		;4mSのＷＡＩＴ
+;-----AD-----
+ADMAIN:	BSET	ADST		;ＡＤ変換開始
+ADEND:	BTST	ADF		;ＡＤ変換終了？
+	BEQ	ADEND		;終了でなけれはADENDへ
+
+	MOV.L	#0,ER1		;結果を入れるレジスタをクリア
+	MOV.B	@ADDRAH,R1H	;変換値上位８ビット
+	MOV.B	@ADDRAL,R1L	;変換値下位２ビット
+	
+	BCLR	ADF		;変換終了フラグをクリア
+	
+	SHLR.W	R1		;変換値を右詰めにする
+	SHLR.W	R1
+	SHLR.W	R1
+	SHLR.W	R1
+	SHLR.W	R1
+	SHLR.W	R1
+;-----電圧値(5.0000000V÷1024≒4883)変換-----
+	MOV.W	#4883,R0	;ＡＤ変換値に4883を掛ける
+	MULXU.W	R0,ER1
+;-----１０進（アスキーコード）変換-----
+	MOV.B	#7,R5L		;文字数のセット	
+	MOV.L	#MOJI+7,ER4	;文字データのアドレスをセット
+			
+DESI:	MOV.W	E1,R2		;２進１０進変換
+	MOV.W	#10,R0		;　ER1÷10を32ビットで行う
+	EXTU.L	ER2		;　商がER2に、
+	DIVXU.W	R0,ER2		;　あまりがE1に入る
+	MOV.W	E2,E1
+	DIVXU.W	R0,ER1
+	MOV.W	R2,E2
+	MOV.W	R1,R2
+	
+	MOV.W	E1,R3		;あまりをレジスタに入れる
+	ADD.B	#H'30,R3L	;１０進→アスキーコード変換
+	MOV.B	R3L,@-ER4	;結果をＲＡＭに格納
+	MOV.L	ER2,ER1
+
+	DEC.B	R5L		;文字数から１を引く
+	BNE	DESI		;文字数が０になるまでくりかえす。
+;----ＬＣＤ文字表示-----
+	MOV.B	#B'00000010,R0L	;カーソルホーム
+	MOV.B	R0L,@LCD_D	;コマンドデータをRAMにいれる
+	BCLR	RS		;コマンドなのでRSを０にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	JSR	@TIME31		;4mSのＷＡＩＴ
+
+	MOV.B	@MOJI,R0L	;１文字目データをレジスタにいれる。
+	MOV.B	R0L,@LCD_D	;文字データをRAMにいれる。
+	BSET	RS		;データなのでRSを１にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	BCLR	RS		;RSを０にもどす。
+
+	MOV.B	#".",R0L	;"."をレジスタにいれる。
+	MOV.B	R0L,@LCD_D	;文字データをRAMにいれる。
+	BSET	RS		;データなのでRSを１にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	BCLR	RS		;RSを０にもどす。
+
+	MOV.B	@MOJI+1,R0L	;２文字目データをレジスタにいれる。
+	MOV.B	R0L,@LCD_D	;文字データをRAMにいれる。
+	BSET	RS		;データなのでRSを１にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	BCLR	RS		;RSを０にもどす。
+
+	MOV.B	@MOJI+2,R0L	;３文字目データをレジスタにいれる。
+	MOV.B	R0L,@LCD_D	;文字データをRAMにいれる。
+	BSET	RS		;データなのでRSを１にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	BCLR	RS		;RSを０にもどす。
+
+	MOV.B	@MOJI+3,R0L	;４文字目データをレジスタにいれる。
+	MOV.B	R0L,@LCD_D	;文字データをRAMにいれる。
+	BSET	RS		;データなのでRSを１にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	BCLR	RS		;RSを０にもどす。
+
+	MOV.B	#"V",R0L	;"V"をレジスタにいれる。
+	MOV.B	R0L,@LCD_D	;文字データをRAMにいれる。
+	BSET	RS		;データなのでRSを１にする。
+	JSR	@LCD_OUT	;サブルーチン(LCDへのデータ出力）
+	BCLR	RS		;RSを０にもどす。
+	
+	JSR	@TIME21		;
+;-----	
+	JMP	@ADMAIN		;再び変換にもどる
+;-----	
+
+;-----サブルーチン-----
+;-----LCDへのデータ、コマンド出力-----
+LCD_OUT:	BSET	E_SIG	;ＬＣＤのEビットをセット
+	MOV.B	@LCD_D,R0L	;データをＲＡＭから読み出す
+	MOV.B	R0L,@P1_D	;ＬＣＤにデータを送る
+	
+	MOV.L	#H'AA,ER3	;450nS	TIMER
+TIME11:	SUB.L	#1,ER3
+	BNE	TIME11
+
+	BCLR	E_SIG		;ＬＣＤのEビットをクリア
+
+	MOV.L	#H'AA,ER3	;450nS	TIMER
+TIME12:	SUB.L	#1,ER3
+	BNE	TIME12
+	RTS
+
+;----400mSタイマ-----
+TIME21:	MOV.L	#H'20000,ER3
+TIME22:	SUB.L	#1,ER3
+	BNE	TIME22
+	RTS
+
+;-----4mSタイマ-----
+TIME31:	MOV.L	#H'2000,ER3
+TIME32:	SUB.L	#1,ER3
+	BNE	TIME32
+	RTS
+
+	.END
