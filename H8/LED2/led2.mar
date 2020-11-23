@@ -1,21 +1,21 @@
 ;
 ;	progname:	led2.mar
 ;	contents:	led on/off for PORT50, PORT51
-;	make:     a38h led2.mar, l38h led2.obj, c38h led2.abs, two2neg < led2.mot > aout.mot
+;	make:     	a38h led2.mar, l38h led2.obj, c38h led2.abs, two2neg < led2.mot > aout.mot
 ;
 		    .cpu	300HA
 		    .section PROG4, code, locate=h'000000
-P5DDR   .equ	h'FFFFC8
-P5DR    .equ	h'FFFFCA
+P5DDR   	    .equ	h'FFFFC8
+P5DR    	    .equ	h'FFFFCA
 ;
 ;	H8/3048 has Program RAM area 3087byte free from H'0FF300 to H'0FFF0F
 ;
 		    .section rom, code, locate=h'0FF300
-main:   mov.l	#h'FFF00, ER7
+main:   	    mov.l	#h'FFF00, ER7
 		    mov.b	#h'FF, R0L
 		    mov.b	r0l, @P5DDR
 ;
-loop:   mov.b	#b'00000001, R0L
+loop:   	    mov.b	#b'00000001, R0L
 		    mov.b	r0l, @P5DR
 		    jsr		@tim2
 		    mov.b	#b'00000010, R0L
@@ -23,13 +23,13 @@ loop:   mov.b	#b'00000001, R0L
 		    jsr		@tim2
 		    jmp		@loop
 ;
-tim2:   mov.w	#D'500, E5
-lp2:    jsr		@tim1
+tim2:   	    mov.w	#D'500, E5
+lp2:    	    jsr		@tim1
 		    dec.w	#1, E5
 		    bne	lp2
 		    rts
-tim1:	  mov.l	#d'1000, ER6
-lp1:	  dec.l	#1, ER6
+tim1:	  	    mov.l	#d'1000, ER6
+lp1:	  	    dec.l	#1, ER6
 		    nop
 		    bne	lp1
 		    rts
