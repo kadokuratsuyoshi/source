@@ -1,0 +1,235 @@
+;	�`�c�R���o�[�^�ƂP�U�������Q�s�k�b�c�̐ڑ�
+;
+;	�T�v
+;	�`�c�R���o�[�^�̓d�����́i�O�|�T�u�j��
+;	�P�U���Q�t����0.000V�`5.000V�ŕ\������B
+;	�\����͂ӂ����т`�c���͂��J��Ԃ��B
+;
+;	�`�c�R���o�[�^���́i�P�ꃂ�[�h�j
+;		AN0(�|�[�g�V�@0�b�g�j
+;
+;	�t���ڑ�
+;		�f�[�^���|�[�g�P
+;		�d�@�@���|�[�g�Q�̃r�b�g�O
+;		�q�r�@���|�[�g�Q�̃r�b�g�P
+;
+;	�t���ڑ�
+;	�g�W�}�C�R��	�k�b�c
+;	�o�P�[�O	�c�O
+;	�o�P�[�P	�c�P
+;	�o�P�[�Q	�c�Q	
+;	�o�P�[�R	�c�R
+;	�o�P�[�S	�c�S
+;	�o�P�[�T	�c�T
+;	�o�P�[�U	�c�U
+;	�o�P�[�V	�c�V
+;	�o�Q�|�O	�d
+;	�o�Q�|�P	�q�r
+;	�f�m�c		�q�^�v
+;
+;	�\�t�g�E�G�A�̂Ȃ���
+;	�@���Z�b�g�x�N�g���̐ݒ�iH'000100����X�^�[�g�j
+;	�A�X�^�b�N�|�C���^�C�h�^�n�̐ݒ�
+;	�B�k�b�c�̃\�t�g�E�G�A���Z�b�g
+;	�C�k�b�c�����ݒ�
+;	�D�`�c�R���o�[�^�X�^�[�g
+;	�E�`�c���͒l��d���l�ɕϊ�
+;	�F�Q�i��\���p�P�O�i�ɕϊ�
+;	�G�k�b�c�\��
+;	�H�ĂчD�ւ��ǂ�B
+
+	.CPU 300HA
+	.SECTION A,DATA,LOCATE=H'000000
+
+;�V���{����`
+LCD_D	.EQU	H'FFF710	;�k�b�c�ւ̃f�[�^������q�`�l
+MOJI	.EQU	H'FFF711	;���茋�ʁi�P�O�i�d���l�V���j
+				;������q�`�l
+P1_D	.EQU	H'FFFFC2	;�|�[�g�P�f�[�^���W�X�^
+				;�k�b�c�̃f�[�^��
+P2_D	.EQU	H'FFFFC3	;�|�[�g�Q�f�[�^���W�X�^	
+E_SIG	.BEQU	0,P2_D		;�d�r�b�g�i�k�b�c�j
+RS	.BEQU	1,P2_D		;�q�r�r�b�g�i�k�b�c�j
+
+ADCSR	.EQU	H'FFFFE8	;�`�c�R���g���[���[�g���W�X�^	
+ADST	.BEQU	5,ADCSR		;�`�c�̊J�n�t���O
+ADF	.BEQU	7,ADCSR		;�`�c�̑���I���t���O
+
+ADDRAH	.EQU	H'FFFFE0	;�`�c�f�[�^���W�X�^�`�g	
+ADDRAL	.EQU	H'FFFFE1	;�`�c�f�[�^���W�X�^�`�k	
+
+;-----���Z�b�g�x�N�g��-----
+	.DATA.L	INIT		;���Z�b�g�x�N�g��
+;-----������I/O�̐ݒ�-----
+	.ORG	H'000100
+INIT:	MOV.L	#H'FFF10,ER7	;�X�^�b�N�|�C���^�ݒ�
+	MOV.B	#H'FF,R0L	;�|�[�g�P�A�Q���o�͂ɐݒ�
+	MOV.B	R0L,@H'FFFFC0	;�|�[�g�P
+	MOV.B	R0L,@H'FFFFC1	;�|�[�g�Q
+	MOV.B	#H'08,R0L	;�`�c�R���o�[�^�ݒ�
+	MOV.B	R0L,@ADCSR	;�P�ꃂ�[�h�A�`�m�O�̂ݎg�p
+;-----�k�b�c�\�t�g�E�G�A���Z�b�g-----
+	JSR	@TIME31		;15mS�̂v�`�h�s	(4mS*4)
+	JSR	@TIME31
+	JSR	@TIME31
+	JSR	@TIME31		
+
+	MOV.B	#B'00110000,R0L	;�k�b�c�t�@���N�V�����Z�b�g1
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+
+	JSR	@TIME31		;4mS�̂v�`�h�s
+
+	MOV.B	#B'00110000,R0L	;�k�b�c�t�@���N�V�����Z�b�g2
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+
+	JSR	@TIME31		;4mS�̂v�`�h�s
+
+	MOV.B	#B'00110000,R0L	;�k�b�c�t�@���N�V�����Z�b�g3
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+;-----�k�b�c�����ݒ�----
+	MOV.B	#B'00111000,R0L	;�t�@���N�V�����Z�b�g
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+
+	MOV.B	#B'00001110,R0L	;�\���n�m
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+
+	MOV.B	#B'00000110,R0L	;�G���g���[���[�h
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+
+	JSR	@TIME31		;4mS�̂v�`�h�s
+
+	MOV.B	#B'00000001,R0L	;�\���N���A
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	JSR	@TIME31		;4mS�̂v�`�h�s
+;-----AD-----
+ADMAIN:	BSET	ADST		;�`�c�ϊ��J�n
+ADEND:	BTST	ADF		;�`�c�ϊ��I���H
+	BEQ	ADEND		;�I���łȂ����ADEND��
+
+	MOV.L	#0,ER1		;���ʂ����郌�W�X�^���N���A
+	MOV.B	@ADDRAH,R1H	;�ϊ��l��ʂW�r�b�g
+	MOV.B	@ADDRAL,R1L	;�ϊ��l���ʂQ�r�b�g
+	
+	BCLR	ADF		;�ϊ��I���t���O���N���A
+	
+	SHLR.W	R1		;�ϊ��l���E�l�߂ɂ���
+	SHLR.W	R1
+	SHLR.W	R1
+	SHLR.W	R1
+	SHLR.W	R1
+	SHLR.W	R1
+;-----�d���l(5.0000000V��1024��4883)�ϊ�-----
+	MOV.W	#4883,R0	;�`�c�ϊ��l��4883���|����
+	MULXU.W	R0,ER1
+;-----�P�O�i�i�������ށj�ϊ�-----
+	MOV.B	#7,R5L		;�������̃Z�b�g	
+	MOV.L	#MOJI+7,ER4	;�����f�[�^�̃A�h���X���Z�b�g
+			
+DESI:	MOV.W	E1,R2		;�Q�i�P�O�i�ϊ�
+	MOV.W	#10,R0		;�@ER1��10��32�r�b�g�ōs��
+	EXTU.L	ER2		;�@����ER2�ɁA
+	DIVXU.W	R0,ER2		;�@���܂肪E1�ɓ���
+	MOV.W	E2,E1
+	DIVXU.W	R0,ER1
+	MOV.W	R2,E2
+	MOV.W	R1,R2
+	
+	MOV.W	E1,R3		;���܂�����W�X�^�ɓ����
+	ADD.B	#H'30,R3L	;�P�O�i���������ޕϊ�
+	MOV.B	R3L,@-ER4	;���ʂ��q�`�l�Ɋi�[
+	MOV.L	ER2,ER1
+
+	DEC.B	R5L		;����������P������
+	BNE	DESI		;���������O�ɂȂ�܂ł��肩�����B
+;----�k�b�c�����\��-----
+	MOV.B	#B'00000010,R0L	;�J�[�\���z�[��
+	MOV.B	R0L,@LCD_D	;�R�}���h�f�[�^��RAM�ɂ����
+	BCLR	RS		;�R�}���h�Ȃ̂�RS���O�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	JSR	@TIME31		;4mS�̂v�`�h�s
+
+	MOV.B	@MOJI,R0L	;�P�����ڃf�[�^�����W�X�^�ɂ����B
+	MOV.B	R0L,@LCD_D	;�����f�[�^��RAM�ɂ����B
+	BSET	RS		;�f�[�^�Ȃ̂�RS���P�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	BCLR	RS		;RS���O�ɂ��ǂ��B
+
+	MOV.B	#".",R0L	;"."�����W�X�^�ɂ����B
+	MOV.B	R0L,@LCD_D	;�����f�[�^��RAM�ɂ����B
+	BSET	RS		;�f�[�^�Ȃ̂�RS���P�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	BCLR	RS		;RS���O�ɂ��ǂ��B
+
+	MOV.B	@MOJI+1,R0L	;�Q�����ڃf�[�^�����W�X�^�ɂ����B
+	MOV.B	R0L,@LCD_D	;�����f�[�^��RAM�ɂ����B
+	BSET	RS		;�f�[�^�Ȃ̂�RS���P�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	BCLR	RS		;RS���O�ɂ��ǂ��B
+
+	MOV.B	@MOJI+2,R0L	;�R�����ڃf�[�^�����W�X�^�ɂ����B
+	MOV.B	R0L,@LCD_D	;�����f�[�^��RAM�ɂ����B
+	BSET	RS		;�f�[�^�Ȃ̂�RS���P�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	BCLR	RS		;RS���O�ɂ��ǂ��B
+
+	MOV.B	@MOJI+3,R0L	;�S�����ڃf�[�^�����W�X�^�ɂ����B
+	MOV.B	R0L,@LCD_D	;�����f�[�^��RAM�ɂ����B
+	BSET	RS		;�f�[�^�Ȃ̂�RS���P�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	BCLR	RS		;RS���O�ɂ��ǂ��B
+
+	MOV.B	#"V",R0L	;"V"�����W�X�^�ɂ����B
+	MOV.B	R0L,@LCD_D	;�����f�[�^��RAM�ɂ����B
+	BSET	RS		;�f�[�^�Ȃ̂�RS���P�ɂ���B
+	JSR	@LCD_OUT	;���ٰ��(LCD�ւ̃f�[�^�o�́j
+	BCLR	RS		;RS���O�ɂ��ǂ��B
+	
+	JSR	@TIME21		;
+;-----	
+	JMP	@ADMAIN		;�Ăѕϊ��ɂ��ǂ�
+;-----	
+
+;-----�T�u���[�`��-----
+;-----LCD�ւ̃f�[�^�A�R�}���h�o��-----
+LCD_OUT:	BSET	E_SIG	;�k�b�c��E�r�b�g���Z�b�g
+	MOV.B	@LCD_D,R0L	;�f�[�^���q�`�l����ǂݏo��
+	MOV.B	R0L,@P1_D	;�k�b�c�Ƀf�[�^�𑗂�
+	
+	MOV.L	#H'AA,ER3	;450nS	TIMER
+TIME11:	SUB.L	#1,ER3
+	BNE	TIME11
+
+	BCLR	E_SIG		;�k�b�c��E�r�b�g���N���A
+
+	MOV.L	#H'AA,ER3	;450nS	TIMER
+TIME12:	SUB.L	#1,ER3
+	BNE	TIME12
+	RTS
+
+;----400mS���-----
+TIME21:	MOV.L	#H'20000,ER3
+TIME22:	SUB.L	#1,ER3
+	BNE	TIME22
+	RTS
+
+;-----4mS���-----
+TIME31:	MOV.L	#H'2000,ER3
+TIME32:	SUB.L	#1,ER3
+	BNE	TIME32
+	RTS
+
+	.END	
