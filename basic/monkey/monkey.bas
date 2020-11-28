@@ -1,0 +1,17 @@
+   10 V=2
+   20 X=20
+   30 G=1
+   40 T=0
+   50 DT=0.01
+   60 P=0
+   70 FOR I=0 TO 500
+   80   IF I MOD 10=0 THEN PRINT SPACE$(40+X);"o"
+   90   T = T + DT
+  100   X = X - 1/2*G*T*T
+  110   IF I MOD 10=0 THEN PRINT SPACE$(40+P);"x"
+  120   P = P + V*T*SIN(30*(3.14/180)) - 1/2 * G*T*T
+  130   IF P>X THEN V=V-0.1:GOTO 20
+  140   IF (40+X)<0 THEN END
+  150   IF (40+P)<0 THEN END
+  160 NEXT I
+  170 END
