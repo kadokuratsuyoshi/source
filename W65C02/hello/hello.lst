@@ -1,0 +1,19 @@
+    1 0280                         org      $0280
+    2 FFEF              Echo       equ      $ffef
+    3 FF1F              Monitor    equ      $ff1f
+    4                   
+    5 0280              Begin:
+    6 0280 A200                    LDX      #$00
+    7 0282              Print:
+    8 0282 BD9302                  LDA      String,X
+    9 0285 C900                    CMP      #$00
+   10 0287 F007                    BEQ      Done
+   11 0289 20EFFF                  JSR      Echo
+   12 028C E8                      INX
+   13 028D 4C8202                  JMP      Print
+   14 0290              Done:
+   15 0290 4C1FFF                  JMP      Monitor
+   16 0293              String:
+   17 0293 48454C4C4F2C            asc      "HELLO, WORLD",$00
+           20574F524C44 
+           00           
