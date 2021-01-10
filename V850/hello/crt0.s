@@ -1,3 +1,6 @@
+#	filename:	crt0.s
+#	contents:	C runtime of the very beginning
+#
 #   Copyright (C) NEC Electronics Corporation 1998,2002
 #   NEC ELECTRONICS CONFIDENTIAL AND PROPRIETARY
 #   All rights reserved by NEC Electronics Corporation.
