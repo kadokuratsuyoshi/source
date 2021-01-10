@@ -4,7 +4,8 @@
 	(C)2012 Tetsuya Suzuki, All rights reserved.
 */
 #pragma ioreg
-#define CQ_V850
+#define CQ_V850		// for NEC CQ_V850 board
+#define EN_FLOAT	// for Scientific calculations
 // Compiler requires description
 #include <stdlib.h>
 #include "sci.h"
@@ -59,6 +60,9 @@ const char* kwtbl[] = {
 #ifdef CQ_V850
 	, "AD"
 #endif
+#ifdef EN_FLOAT
+	, "EXP", "LN", "SIN", "COS", "TAN", "ATAN", "PI"
+#endif
 };
 
 // Keyword count
@@ -78,6 +82,9 @@ enum{
 #ifdef CQ_V850
 	I_AD,
 #endif
+#ifdef EN_FLOAT
+	, I_EXP, I_LN, I_SIN, I_COS, I_TAN, I_ATAN, I_PI
+#ENDIF
 	I_NUM, I_VAR, I_STR,
 	I_EOL
 };
