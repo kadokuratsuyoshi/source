@@ -83,7 +83,7 @@ enum{
 	I_AD,
 #endif
 #ifdef EN_FLOAT
-	, I_EXP, I_LN, I_SIN, I_COS, I_TAN, I_ATAN, I_PI
+	I_EXP, I_LN, I_SIN, I_COS, I_TAN, I_ATAN, I_PI,
 #endif
 	I_NUM, I_VAR, I_STR,
 	I_EOL
