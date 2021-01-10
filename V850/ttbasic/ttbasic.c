@@ -4,7 +4,7 @@
 	(C)2012 Tetsuya Suzuki, All rights reserved.
 */
 #pragma ioreg
-
+#define CQ_V850
 // Compiler requires description
 #include <stdlib.h>
 #include "sci.h"
@@ -56,7 +56,9 @@ const char* kwtbl[] = {
 	">=", "#", ">", "=", "<=", "<",
 	 "@", "RND", "ABS", "SIZE",
 	"LIST", "RUN", "NEW"
+#ifdef CQ_V850
 	, "AD"
+#endif
 };
 
 // Keyword count
@@ -73,7 +75,9 @@ enum{
 	I_GTE, I_SHARP, I_GT, I_EQ, I_LTE, I_LT,
 	I_ARRAY, I_RND, I_ABS, I_SIZE,
 	I_LIST, I_RUN, I_NEW,
+#ifdef CQ_V850
 	I_AD,
+#endif
 	I_NUM, I_VAR, I_STR,
 	I_EOL
 };
@@ -966,6 +970,7 @@ void inew(void){
 	clp = listbuf;
 }
 
+#ifdef CQ_V850
 int ad_get(unsigned char adc)
 {
 	int x;
@@ -1045,6 +1050,7 @@ void iad(void){
 		ad_mes_cnt++;
 	}
 }
+#endif
 
 unsigned char* iexe(){
 	short lineno;
@@ -1197,10 +1203,12 @@ unsigned char* iexe(){
 			cip++;
 			iarray();
 			break;
+#ifdef CQ_V850
 		case I_AD:
 			cip++;
 			iad();
 			break;
+#endif
 		case I_LIST:
 		case I_NEW:
 		case I_RUN:
@@ -1313,4 +1321,4 @@ void basic(){
 		}
 	}
 }
-
+// eof
