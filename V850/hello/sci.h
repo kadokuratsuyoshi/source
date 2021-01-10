@@ -1,12 +1,9 @@
 /*
-	Filename: TinyBASIC/sci.h
-	Language: CA850(PM+)
+	filename:  sci.h
+	contents:  uart for sci.c
 */
 
 void vInit_uart(void);
 void c_putch(unsigned char);
 unsigned char c_kbhit(void);
 unsigned char c_getch(void);
-//void putch2(char);
-//unsigned char kbhit2(void);
-//char getch2(void);
