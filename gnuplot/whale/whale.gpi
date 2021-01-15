@@ -1,0 +1,10 @@
+set parametric
+set hidden3d
+unset key
+set xrange [0:8]
+set yrange [-4:4]
+set zrange [-2:2]
+set style data line
+set title "Demo of multiple mesh per file capability - Digitized Blue Whale"
+splot "whale.dat"
+pause -1
