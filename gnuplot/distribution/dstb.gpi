@@ -1,0 +1,15 @@
+#	
+#	program:	dtbt.gpi
+#	contents:	plot FD, BE, MB distribution
+#	usage:		gnuplot dtbt.gpi
+#
+#	x : (e-u)/kt, y : f(x)
+#	1 > x == classical regime
+#
+set xrange[-3:3]
+set yrange[0:5]
+set arrow from 0,0 to 0,5 nohead
+plot (1/(exp(x)+1)) title "Fermi-Dirac", \
+	(1/(exp(x)-1)) title "Bose-Einstein", \
+	(1/exp(x)) title "Maxwell-Boltzman"
+pause -1
