@@ -1,0 +1,4 @@
+#!/bin/bash
+gcc sht.c -o sht.exe -lm
+./sht.exe > out0
+gnuplot sht.gpi
