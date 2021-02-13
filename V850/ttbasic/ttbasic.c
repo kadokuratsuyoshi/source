@@ -4,6 +4,7 @@
 	(C)2012 Tetsuya Suzuki, All rights reserved.
 */
 #pragma ioreg
+#define V850
 
 // Compiler requires description
 #include <stdlib.h>
@@ -56,8 +57,10 @@ const char* kwtbl[] = {
 	">=", "#", ">", "=", "<=", "<",
 	 "@", "RND", "ABS", "SIZE",
 	"LIST", "RUN", "NEW"
+#ifdef V850
 	, "ADALL", "AD"
 	, "PWMON", "PWMOFF", "PWM"
+#endif
 };
 
 // Keyword count
@@ -74,8 +77,10 @@ enum{
 	I_GTE, I_SHARP, I_GT, I_EQ, I_LTE, I_LT,
 	I_ARRAY, I_RND, I_ABS, I_SIZE,
 	I_LIST, I_RUN, I_NEW,
+#ifdef V850
 	I_ADALL,I_AD,
 	I_PWMON, I_PWMOFF, I_PWM,
+#endif
 	I_NUM, I_VAR, I_STR,
 	I_EOL
 };
@@ -638,6 +643,7 @@ short getarray()
 	}
 }
 
+#ifdef V850
 int ad_get(unsigned char adc)
 {
 	int x;
@@ -690,6 +696,7 @@ short getad(void){
 	}
 	return(x);
 }
+#endif
 
 short ivalue(){
 	short value;
@@ -722,10 +729,12 @@ short ivalue(){
 		cip++;
 		value = getrnd();
 		break;
-     case I_AD:
+#ifdef V850
+	case I_AD:
 		cip++;
 		value = getad();
-        break;
+	        break;
+#endif
 	 case I_ABS:
 		cip++;
 		value = getabs();
@@ -1025,6 +1034,7 @@ void inew(void){
 	clp = listbuf;
 }
 
+#ifdef V850
 void iadall(void){
 	int i, x;
 	int msec;
@@ -1095,6 +1105,7 @@ void ipwm(void){
 	//addr=(unsigned short *)0xfffff5b8;
 	//*addr=value*16;
 }
+#endif
 
 unsigned char* iexe(){
 	short lineno;
@@ -1247,6 +1258,7 @@ unsigned char* iexe(){
 			cip++;
 			iarray();
 			break;
+#ifdef V850
 		case I_ADALL:
 			cip++;
 			iadall();
@@ -1263,6 +1275,7 @@ unsigned char* iexe(){
 			cip++;
 			ipwm();
 			break;
+#endif
 		case I_LIST:
 		case I_NEW:
 		case I_RUN:
@@ -1374,4 +1387,4 @@ void basic(){
 		}
 	}
 }
-
+// eof
