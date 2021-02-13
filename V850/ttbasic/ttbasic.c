@@ -727,10 +727,12 @@ short ivalue(){
 		cip++;
 		value = getrnd();
 		break;
-     case I_AD:
+#ifdef V850
+         case I_AD:
 		cip++;
 		value = getad();
-        break;
+                break;
+#endif
 	 case I_ABS:
 		cip++;
 		value = getabs();
