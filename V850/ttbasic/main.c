@@ -58,15 +58,19 @@ void init_gpio()
 void init_pwm()
 {
 	TP2CE = 0; // stop timer
-	PM9L.7 = 0;
-	PMC9L.7 = 1; // set P97 TOP2 output
+	PM9L.7 = 0; // TP20
+	PMC9L.7 = 1; // set P97 TOP20 output
 	PFC9L.7 = 1;
 	PFCE9L.7 = 1;
-	TP2CTL0 = 0x05; // frequency 0x00==fxx, 0x04==fxx/16, 0x05==fxx/32
+	PM9L.6 = 0; // TP21
+	PMC9L.6 = 1; // set P96 TOP21 output
+	PFC9L.6 = 1;
+	PFCE9L.6 = 1;
+	TP2CTL0 = 0x00; // frequency 0x00==fxx, 0x04==fxx/16, 0x05==fxx/32
 	TP2CTL1 = 0x04; // pwm mode
-	TP2IOC0 = 0x01; // 0x01 | 0x02; // 0x02 output enable if low level start
-	TP2CCR0 = 16384-1; // 500-1; // 40kHz
-	TP2CCR1 = 16384/2; // 500/2; // duty == 50%
+	TP2IOC0 = 0x04; // 0x01 | 0x02; // 0x02 output enable if low level start
+	TP2CCR0 = 8192-1; // 500-1; // 40kHz
+	TP2CCR1 = 8192/2; // 500/2; // duty == 50%
 	//TP2CCIC0 = 0x07;
 }
 
