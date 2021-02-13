@@ -4,10 +4,12 @@
 	make:		build on PM+
 	usage:		write on FPL, power on CQ_V850
 */
+#define V850
 #pragma ioreg
 #include "ttbasic.h"
 extern unsigned long _S_romp;
 
+#ifdef V850
 /*
 #define	ADA0M0 (unsigned char*)0xfffff200H
 #define	ADA0M1 (unsigned char*)0xfffff201H
@@ -73,9 +75,11 @@ void init_pwm()
 	TP2CCR1 = 8192/2; // 500/2; // duty == 50%
 	//TP2CCIC0 = 0x07;
 }
+#endif
 
 void main( void )
 {
+#ifdef V850
 	int ret;
 	
 	/* initialize CPU */
@@ -102,14 +106,16 @@ void main( void )
 
 	// for PWM
 	init_pwm();
-
+#endif
 	while(1){
 		// TOYOSHIKI TINY BASIC
 		basic();
 	}
 }
 
+#ifdef V850
 #pragma interrupt INTWT intwt_handler
 __interrupt void intwt_handler(void) {
 	PCT.6 ^=1 ;
 }
+#endif
