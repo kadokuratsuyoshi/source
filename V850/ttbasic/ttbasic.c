@@ -4,8 +4,7 @@
 	(C)2012 Tetsuya Suzuki, All rights reserved.
 */
 #pragma ioreg
-#define CQ_V850		// for NEC CQ_V850 board
-#define EN_FLOAT	// for Scientific calculations
+
 // Compiler requires description
 #include <stdlib.h>
 #include "sci.h"
@@ -13,9 +12,9 @@
 // Depending on device functions
 // TO-DO Rewrite these functions to fit your machine
 // And see 'getrnd()'
-void c_putch(char c){uart_tx(c);}
-char c_getch(){return getch2();}
-char c_kbhit(){return(kbhit2());}
+void c_putch(char c){c_putch2(c);}
+char c_getch(){return c_getch2();}
+char c_kbhit(){return(c_kbhit2());}
 void newline(void){
 	c_putch(13); //CR
 	c_putch(10); //LF
@@ -57,12 +56,8 @@ const char* kwtbl[] = {
 	">=", "#", ">", "=", "<=", "<",
 	 "@", "RND", "ABS", "SIZE",
 	"LIST", "RUN", "NEW"
-#ifdef CQ_V850
-	, "AD"
-#endif
-#ifdef EN_FLOAT
-	, "EXP", "LN", "SIN", "COS", "TAN", "ATAN", "PI"
-#endif
+	, "ADALL", "AD"
+	, "PWMON", "PWMOFF", "PWM"
 };
 
 // Keyword count
@@ -79,12 +74,8 @@ enum{
 	I_GTE, I_SHARP, I_GT, I_EQ, I_LTE, I_LT,
 	I_ARRAY, I_RND, I_ABS, I_SIZE,
 	I_LIST, I_RUN, I_NEW,
-#ifdef CQ_V850
-	I_AD,
-#endif
-#ifdef EN_FLOAT
-	I_EXP, I_LN, I_SIN, I_COS, I_TAN, I_ATAN, I_PI,
-#endif
+	I_ADALL,I_AD,
+	I_PWMON, I_PWMOFF, I_PWM,
 	I_NUM, I_VAR, I_STR,
 	I_EOL
 };
@@ -647,6 +638,59 @@ short getarray()
 	}
 }
 
+int ad_get(unsigned char adc)
+{
+	int x;
+	if(adc==0)
+		x=ADA0CR0;
+	if(adc==1)
+		x=ADA0CR1;
+	if(adc==2)
+		x=ADA0CR2;
+	if(adc==3)
+		x=ADA0CR3;
+	if(adc==4)
+		x=ADA0CR4;
+	if(adc==5)
+		x=ADA0CR5;
+	if(adc==6)
+		x=ADA0CR6;
+	if(adc==7)
+		x=ADA0CR7;
+	if(adc==8)
+		x=ADA0CR8;
+	if(adc==9)
+		x=ADA0CR9;
+	if(adc==10)
+		x=ADA0CR10;
+	if(adc==11)
+		x=ADA0CR11;
+	x = x >> 6;
+	return x;
+}
+
+short getad(void){
+	short value;
+	unsigned int param;
+	int i, x;
+	int msec;
+	unsigned char adc;
+	int str_cnt;
+	
+	value = getparam();
+	if(err) return 0;
+	adc=0x00;
+	if ( (0<=value) && (value<11) ) {
+		adc=value;
+		ADA0S=adc;
+		ADA0M0.7=1;
+		for( msec=0;msec<600000;msec++ ) __nop();
+		x=ad_get(adc);
+		ADA0M0.7=0; 
+	}
+	return(x);
+}
+
 short ivalue(){
 	short value;
 
@@ -678,6 +722,10 @@ short ivalue(){
 		cip++;
 		value = getrnd();
 		break;
+     case I_AD:
+		cip++;
+		value = getad();
+        break;
 	 case I_ABS:
 		cip++;
 		value = getabs();
@@ -977,39 +1025,7 @@ void inew(void){
 	clp = listbuf;
 }
 
-#ifdef CQ_V850
-int ad_get(unsigned char adc)
-{
-	int x;
-	if(adc==0)
-		x=ADA0CR0;
-	if(adc==1)
-		x=ADA0CR1;
-	if(adc==2)
-		x=ADA0CR2;
-	if(adc==3)
-		x=ADA0CR3;
-	if(adc==4)
-		x=ADA0CR4;
-	if(adc==5)
-		x=ADA0CR5;
-	if(adc==6)
-		x=ADA0CR6;
-	if(adc==7)
-		x=ADA0CR7;
-	if(adc==8)
-		x=ADA0CR8;
-	if(adc==9)
-		x=ADA0CR9;
-	if(adc==10)
-		x=ADA0CR10;
-	if(adc==11)
-		x=ADA0CR11;
-	x = x >> 6;
-	return x;
-}
-
-void iad(void){
+void iadall(void){
 	int i, x;
 	int msec;
 	unsigned char adc;
@@ -1057,7 +1073,28 @@ void iad(void){
 		ad_mes_cnt++;
 	}
 }
-#endif
+
+void ipwmon(void){
+	TP2CE = 1;
+}
+
+void ipwmoff(void){
+	TP2CE = 0;
+}
+
+void ipwm(void){
+	//volatile unsigned short *addr;
+	unsigned short value;
+
+	value = (unsigned short)getparam();
+	//if(err) return 0;
+	//if ( (0<=value) && (value<=100) ) {
+
+	TP2CCR0=value*16;
+	//TP2CCR1=value*16;
+	//addr=(unsigned short *)0xfffff5b8;
+	//*addr=value*16;
+}
 
 unsigned char* iexe(){
 	short lineno;
@@ -1210,12 +1247,22 @@ unsigned char* iexe(){
 			cip++;
 			iarray();
 			break;
-#ifdef CQ_V850
-		case I_AD:
+		case I_ADALL:
 			cip++;
-			iad();
+			iadall();
 			break;
-#endif
+		case I_PWMON:
+			cip++;
+			ipwmon();
+			break;
+		case I_PWMOFF:
+			cip++;
+			ipwmoff();
+			break;
+		case I_PWM:
+			cip++;
+			ipwm();
+			break;
 		case I_LIST:
 		case I_NEW:
 		case I_RUN:
@@ -1298,7 +1345,6 @@ void icom(){
 void basic(){
 	unsigned char len;
 
-	sci2_init();
 	//inew();
 	c_puts("TOYOSHIKI TINY BASIC"); newline();
 	c_puts("CQ_V850 EDITION"); newline();
@@ -1328,4 +1374,4 @@ void basic(){
 		}
 	}
 }
-// eof
+
