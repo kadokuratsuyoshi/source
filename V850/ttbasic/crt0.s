@@ -1,6 +1,6 @@
 #=============================================================================
 # NAME
-#    crtE.s -  start up module for ca850(V850E)
+#    crtE.s -  start up module for ca850(V850ES/JG2, CQ_V850 Board)
 #
 # DESCRIPTIONS:
 #      This assembly program is a sample of start-up module for ca850(V850E).
@@ -170,4 +170,3 @@ __startend:
 #								#
 #-------------------- end of start up module -------------------#
 #								#
-
