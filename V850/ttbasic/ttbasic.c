@@ -78,7 +78,7 @@ enum{
 	I_ARRAY, I_RND, I_ABS, I_SIZE,
 	I_LIST, I_RUN, I_NEW,
 #ifdef V850
-	I_ADALL,I_AD,
+	I_ADALL, I_AD,
 	I_PWMON, I_PWMOFF, I_PWM,
 #endif
 	I_NUM, I_VAR, I_STR,
