@@ -1,9 +1,9 @@
 /*
 	program:	tetris.c on Raspberry Pi
 	contents:	tutorial tetris algorithm works on Escape-sequence
-	make:     gcc tetris.c -o tetris
+	make:     	gcc tetris.c -o tetris
 	usage:		./tetris
-				    up-key:rotation, down-key:falling, left-key:move left, right-key:move right, other:exit
+			up-key:rotation, down-key:falling, left-key:move left, right-key:move right, other:exit
 */
 #include <stdio.h>
 #include <time.h>
