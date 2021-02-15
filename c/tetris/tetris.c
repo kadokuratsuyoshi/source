@@ -1,10 +1,11 @@
 /*
-	program:	tetris.c on Raspberry Pi
-	contents:	tutorial TETRIS algorithm works on Escape-sequence
-	make:     	gcc tetris.c -o tetris
-	usage:		./tetris
-			up-key:rotation, down-key:falling, left-key:move left, right-key:move right, other:exit
+	program:	tetris.c on Windows 10 with ansicon
+	contents:	tutorial tetris algorithm works on Escape-sequence
+	make:		gcc tetris.c -o tetris
+	usage:		./ansicon tetris
+				I-key:rotation, K-key:falling, J-key:move left, L-key:move right, other:exit
 */
+// #define LINUX
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -12,6 +13,10 @@
 #include <sys/time.h>
 #include <signal.h>
 #include <errno.h>
+#ifndef LINUX
+#include <conio.h>
+#endif
+#ifdef LINUX
 #include <termios.h>
 #include <unistd.h>
 
@@ -20,6 +25,7 @@ struct termios otty,ntty;
 int kbhit(void);
 int getch(void);
 int tinit(void);
+#endif
 
 #define clearScreen() printf("\033[2J")
 #define setPosition(x,y) printf("\033[%d;%dH",(y)+1,(x)*2+1)
@@ -62,7 +68,7 @@ void initialize(void);
 void reset(void);
 int checkRenge(Cell a, int x, int y);
 int printCell(Cell c, int x, int y);
-int clearCell(Cell c,int x, int y);
+int clearCell(Cell c, int x, int y);
 int printBlock(Cell block[BLOCK_SIZE][BLOCK_SIZE], int x, int y);
 int clearBlock(Cell block[BLOCK_SIZE][BLOCK_SIZE], int x, int y);
 void copyBlock(Cell src[BLOCK_SIZE][BLOCK_SIZE], Cell dst[BLOCK_SIZE][BLOCK_SIZE]);
@@ -206,6 +212,7 @@ int main(int argc, char *argv[])
 	struct timeval start_time, now_time, pre_time;
 	double duration,thold;
 
+	srand((unsigned)time(NULL));
 	score=0;
 	t=rand()%BLOCK_NUM;
 	next=rand()%BLOCK_NUM;
@@ -224,38 +231,64 @@ int main(int argc, char *argv[])
 		prey = y;
 		if (kbhit()) {
 			c = getch();
-			if (c==0x1b) {
+#ifdef LINUX
+			if (c=='\0') {
 				c=getch();
 				if (c==0x5b) {
 					c=getch();
+#endif
 					switch (c) {
+#ifdef LINUX
 					case 0x41:
+#else
+					case 0x69:
+#endif
 						rotateBlock(block,block_tmp);
 						clearBlock(block,x,y);
 						printBlock(block_tmp,x,y);
 						copyBlock(block_tmp,block);
 					break;
+#ifdef LINUX
 					case 0x42:
+#else
+					case 0x6b:
+#endif
 						while (checkMap(block,x,y+1)==0)
 							y++;
 						score+=y-prey;
 						printScore(score);
 					break;
+#ifdef LINUX
 					case 0x43:
+#else
+					case 0x6c:
+#endif
 						if (checkMap(block,x+1,y)==0)
 							x++;
 					break;
+#ifdef LINUX
 					case 0x44:
+#else
+					case 0x6a:
+#endif
 						if (checkMap(block,x-1,y)==0)
 							x--;
 					break;
+#ifndef LINUX
+					default:
+						reset();
+						exit(1);
+					break;
+#endif
 					}
+#ifdef LINUX
 				}
 			}
 			else {
 				reset();
 				exit(1);
 			}
+#endif
 		}
 		gettimeofday(&now_time,NULL);
 		duration = now_time.tv_sec-pre_time.tv_sec
@@ -297,6 +330,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	reset();
+	exit(0);
 }
 
 int wait(int msec)
@@ -309,8 +343,9 @@ void initialize(void)
 {
 	int x,y;
 	Cell a = {'\0',BLACK,BLACK,NORMAL};
-
+#ifdef LINUX
 	tinit();
+#endif
 	setAttribute(NORMAL);
 	setBackColor(BLACK);
 	setCharColor(WHITE);
@@ -329,8 +364,10 @@ void reset(void)
 	setAttribute(NORMAL);
 	clearScreen();
 	cursolOn();
+#ifdef LINUX
 	tcsetattr(1, TCSADRAIN, &otty);
 	write(1, "\n", 1);
+#endif
 }
 
 int checkRange(Cell a, int x, int y)
@@ -395,7 +432,7 @@ int clearBlock(Cell block[BLOCK_SIZE][BLOCK_SIZE], int x, int y)
 			clearCell(block[j][i],i + x, j + y);
 	return 0;
 }
-
+#ifdef LINUX
 int kbhit(void)
 {
 	int ret;
@@ -454,7 +491,7 @@ int tinit(void)
 	signal(SIGTERM, onsignal);
 	signal(SIGHUP, onsignal);
 }
-
+#endif
 void rotateBlock(Cell src[BLOCK_SIZE][BLOCK_SIZE], Cell dst[BLOCK_SIZE][BLOCK_SIZE])
 {
 	int i,j;
@@ -522,7 +559,10 @@ void deleteLine(int ys)
 	for(y=ys;y>0;y--)
 		for(x=0;x<WIDTH;x++)
 			map[y][x]=map[y-1][x];
+
+		setAttribute(NORMAL);
 	setBackColor(BLACK);
+		setCharColor(BLACK);
 	clearScreen();
 	printMap();
 }
