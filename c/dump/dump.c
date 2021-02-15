@@ -7,7 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
  
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 	unsigned char buf[16];
 	int nbytes = 16;
 	int i, j, ch;
@@ -29,13 +30,13 @@ int main(int argc, char **argv) {
 		for (j = 0; j < 16; j++) {
 			if (j < nbytes) {
 				printf("%02X ", buf[j]);
-            }
-            else {
+			}
+			else {
 				printf("   ");
-            }
+			}
 			if (j == 7) {
 				printf(" ");
-            }
+			}
 			row += buf[j];
 			column[j] += buf[j];
 		}
@@ -45,13 +46,13 @@ int main(int argc, char **argv) {
 				ch = buf[j] & 0xFF;
 				if ((32 < ch) && (ch < 127)) {
 					printf("%c", ch);
-                }
-                else if ( ch == 0x20 ) {
-                    printf(" ");
-                }
+				}
+				else if ( ch == 0x20 ) {
+					printf(" ");
+				}
 				else {
 					printf(".");
-                }
+				}
 			}
 			buf[j]=0;
 		}
@@ -86,3 +87,4 @@ int main(int argc, char **argv) {
 	fclose(fp);
 	return EXIT_SUCCESS;
 }
+// eof
