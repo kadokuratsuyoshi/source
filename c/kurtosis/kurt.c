@@ -1,6 +1,6 @@
 /*
-	program:	rand.c
-	contents:	rand(), srand() test and check std-distribution
+	program:	kurt.c
+	contents:	test kurtosis for the standard distribution and, the uniform distribution
 	make:		gcc rand.c -o rand -lm
 	usage:		rand
 */
