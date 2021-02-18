@@ -4,6 +4,8 @@
 	make:		gcc tetris.c -o tetris
 	usage:		./ansicon tetris
 				I-key:rotation, K-key:falling, J-key:move left, L-key:move right, other:exit
+	usage for LINUX:./tetris
+				for LINUX up-key:rotation, down-key:falling, left-key:move left, right-key:move right, other:exit
 */
 // #define LINUX
 #include <stdio.h>
