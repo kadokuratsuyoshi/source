@@ -1,7 +1,7 @@
 /*
 	program:	kurt.c
 	contents:	test kurtosis for the standard distribution and, the uniform distribution
-	make:		gcc rand.c -o rand -lm
+	make:		gcc kurt.c -o kurt -lm
 	usage:		rand
 */
 #include <stdio.h>
