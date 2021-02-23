@@ -13,7 +13,7 @@
 #define SIZE (NX*NY)
 #define DIST_SIZE (20)
 
-double normrand(double m, double sgm)
+double gaussrand(double m, double sgm)
 {
 	double u_0, u_1, v_0, v_1;
 
@@ -47,7 +47,7 @@ int main(void)
 	for (i=0; i<NX; i++) {
 		for (j=0; j<NY; j++) {
 			//k=rand()%100+1; // uniform random number
-			k=normrand(0.0, 1.0); // gaussian random number
+			k=gaussrand(0.0, 1.0); // gaussian random number
 			if (max_y < k) {
 				max_y = k;
 			}
