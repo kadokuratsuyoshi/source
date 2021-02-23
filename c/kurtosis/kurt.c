@@ -2,7 +2,7 @@
 	program:	kurt.c
 	contents:	test kurtosis for the standard distribution and, the uniform distribution
 	make:		gcc kurt.c -o kurt -lm
-	usage:		rand
+	usage:		
 */
 #include <stdio.h>
 #include <stdlib.h>
