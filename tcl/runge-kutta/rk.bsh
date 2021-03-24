@@ -1,0 +1,3 @@
+#!/bin/bash
+tclsh rk.tcl > rk.csv
+gnuplot rk.plt
