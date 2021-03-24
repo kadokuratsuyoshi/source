@@ -27,7 +27,7 @@ proc rk {} {
         set kv(4) [expr $dt * [rk_a ($t+$dt)   ($x+$kx(3))   ($v+$kv(3))  ] ]
         set dx [expr ($kx(1)+2*($kx(2)+$kx(3))+$kx(4))/6 ]
         set dv [expr ($kv(1)+2*($kv(2)+$kv(3))+$kv(4))/6 ]
-		set t [expr $t+$dt]
+	set t [expr $t+$dt]
         set x [expr $x+$dx]
         set v [expr $v+$dv]
     }
