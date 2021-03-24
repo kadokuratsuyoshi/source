@@ -1,0 +1,3 @@
+#!/bin/bash
+tclsh euler.tcl > euler.txt
+gnuplot euler.plt
