@@ -10,7 +10,7 @@ sub rk_a {
     $k = 1.0;
     $m = 1.0;
     $gamma = 1.0;
-	return ( (-$k*$x-$gamma*$v)/$m );
+    return ( (-$k*$x-$gamma*$v)/$m );
 }
 
 $t = 0.0;
@@ -29,7 +29,7 @@ for ($n=0; $n<1000; $n++) {
     ($kv[3]) = $dt * &rk_a($t+$dt,     $x+$kx[2],     $v+$kv[2]);
     $dx = ($kx[0]+2.0*($kx[1]+$kx[2])+$kx[3])/6.0;
     $dv = ($kv[0]+2.0*($kv[1]+$kv[2])+$kv[3])/6.0;
-	$t = $t + $dt;
+    $t = $t + $dt;
     $x = $x + $dx;
     $v = $v + $dv;
 }
