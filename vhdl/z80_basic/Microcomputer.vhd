@@ -1,7 +1,7 @@
--- program:		Microcomputer.vhd
+-- program:	Microcomputer.vhd
 -- contents:	Z80 core with BASIC interpreter
--- make:			Quartus II (ALTERA)
--- usage:		IP works on Cyclone II(EP2C5T144, FPGA) with SCIF
+-- make:	Quartus II (ALTERA)
+-- usage:	IP works on Cyclone II(EP2C5T144, FPGA) with SCIF
 
 -- This file is copyright by Grant Searle 2014
 -- You are free to use this file in your own projects but must never charge for it nor use it without
@@ -25,110 +25,96 @@ use  IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity Microcomputer is
 	port(
-		n_reset		: in std_logic;
+		n_reset			: in std_logic;
 		clk			: in std_logic;
-
 		sramData		: inout std_logic_vector(7 downto 0);
-		sramAddress	: out std_logic_vector(15 downto 0);
+		sramAddress		: out std_logic_vector(15 downto 0);
 		n_sRamWE		: out std_logic;
 		n_sRamCS		: out std_logic;
 		n_sRamOE		: out std_logic;
-		
 		rxd1			: in std_logic;
 		txd1			: out std_logic;
 		rts1			: out std_logic;
-
 		rxd2			: in std_logic;
 		txd2			: out std_logic;
 		rts2			: out std_logic;
-		
-		videoSync	: out std_logic;
+		videoSync		: out std_logic;
 		video			: out std_logic;
-
-		videoR0		: out std_logic;
-		videoG0		: out std_logic;
-		videoB0		: out std_logic;
-		videoR1		: out std_logic;
-		videoG1		: out std_logic;
-		videoB1		: out std_logic;
+		videoR0			: out std_logic;
+		videoG0			: out std_logic;
+		videoB0			: out std_logic;
+		videoR1			: out std_logic;
+		videoG1			: out std_logic;
+		videoB1			: out std_logic;
 		hSync			: out std_logic;
 		vSync			: out std_logic;
-
-		ps2Clk		: inout std_logic;
-		ps2Data		: inout std_logic;
-
+		ps2Clk			: inout std_logic;
+		ps2Data			: inout std_logic;
 		sdCS			: out std_logic;
-		sdMOSI		: out std_logic;
-		sdMISO		: in std_logic;
-		sdSCLK		: out std_logic;
+		sdMOSI			: out std_logic;
+		sdMISO			: in std_logic;
+		sdSCLK			: out std_logic;
 		driveLED		: out std_logic :='1'	
 	);
 end Microcomputer;
 
 architecture struct of Microcomputer is
-
-	signal n_WR							: std_logic;
-	signal n_RD							: std_logic;
-	signal cpuAddress					: std_logic_vector(15 downto 0);
-	signal cpuDataOut					: std_logic_vector(7 downto 0);
-	signal cpuDataIn					: std_logic_vector(7 downto 0);
-
-	signal basRomData					: std_logic_vector(7 downto 0);
-	signal internalRam1DataOut		: std_logic_vector(7 downto 0);
-	signal internalRam2DataOut		: std_logic_vector(7 downto 0);
-	signal interface1DataOut		: std_logic_vector(7 downto 0);
-	signal interface2DataOut		: std_logic_vector(7 downto 0);
-	signal sdCardDataOut				: std_logic_vector(7 downto 0);
-
-	signal n_memWR						: std_logic :='1';
-	signal n_memRD 					: std_logic :='1';
-
-	signal n_ioWR						: std_logic :='1';
-	signal n_ioRD 						: std_logic :='1';
-	
-	signal n_MREQ						: std_logic :='1';
-	signal n_IORQ						: std_logic :='1';	
-
-	signal n_int1						: std_logic :='1';	
-	signal n_int2						: std_logic :='1';	
-	
-	signal n_externalRamCS			: std_logic :='1';
-	signal n_internalRam1CS			: std_logic :='1';
-	signal n_internalRam2CS			: std_logic :='1';
-	signal n_basRomCS					: std_logic :='1';
-	signal n_interface1CS			: std_logic :='1';
-	signal n_interface2CS			: std_logic :='1';
-	signal n_sdCardCS					: std_logic :='1';
-
-	signal serialClkCount			: std_logic_vector(15 downto 0);
-	signal cpuClkCount				: std_logic_vector(5 downto 0); 
-	signal sdClkCount					: std_logic_vector(5 downto 0); 	
-	signal cpuClock					: std_logic;
-	signal serialClock				: std_logic;
-	signal sdClock						: std_logic;	
+	signal n_WR			: std_logic;
+	signal n_RD			: std_logic;
+	signal cpuAddress		: std_logic_vector(15 downto 0);
+	signal cpuDataOut		: std_logic_vector(7 downto 0);
+	signal cpuDataIn		: std_logic_vector(7 downto 0);
+	signal basRomData		: std_logic_vector(7 downto 0);
+	signal internalRam1DataOut	: std_logic_vector(7 downto 0);
+	signal internalRam2DataOut	: std_logic_vector(7 downto 0);
+	signal interface1DataOut	: std_logic_vector(7 downto 0);
+	signal interface2DataOut	: std_logic_vector(7 downto 0);
+	signal sdCardDataOut		: std_logic_vector(7 downto 0);
+	signal n_memWR			: std_logic :='1';
+	signal n_memRD 			: std_logic :='1';
+	signal n_ioWR			: std_logic :='1';
+	signal n_ioRD 			: std_logic :='1';
+	signal n_MREQ			: std_logic :='1';
+	signal n_IORQ			: std_logic :='1';	
+	signal n_int1			: std_logic :='1';	
+	signal n_int2			: std_logic :='1';	
+	signal n_externalRamCS		: std_logic :='1';
+	signal n_internalRam1CS		: std_logic :='1';
+	signal n_internalRam2CS		: std_logic :='1';
+	signal n_basRomCS		: std_logic :='1';
+	signal n_interface1CS		: std_logic :='1';
+	signal n_interface2CS		: std_logic :='1';
+	signal n_sdCardCS		: std_logic :='1';
+	signal serialClkCount		: std_logic_vector(15 downto 0);
+	signal cpuClkCount		: std_logic_vector(5 downto 0); 
+	signal sdClkCount		: std_logic_vector(5 downto 0); 	
+	signal cpuClock			: std_logic;
+	signal serialClock		: std_logic;
+	signal sdClock			: std_logic;	
 	
 begin
 -- ____________________________________________________________________________________
 -- CPU CHOICE GOES HERE
-cpu1 : entity work.t80s
-generic map(mode => 1, t2write => 1, iowait => 0)
-port map(
-reset_n => n_reset,
-clk_n => cpuClock,
-wait_n => '1',
-int_n => '1',
-nmi_n => '1',
-busrq_n => '1',
-mreq_n => n_MREQ,
-iorq_n => n_IORQ,
-rd_n => n_RD,
-wr_n => n_WR,
-a => cpuAddress,
-di => cpuDataIn,
-do => cpuDataOut);
+	cpu1 : entity work.t80s
+	generic map(mode => 1, t2write => 1, iowait => 0)
+	port map(
+		reset_n => n_reset,
+		clk_n => cpuClock,
+		wait_n => '1',
+		int_n => '1',
+		nmi_n => '1',
+		busrq_n => '1',
+		mreq_n => n_MREQ,
+		iorq_n => n_IORQ,
+		rd_n => n_RD,
+		wr_n => n_WR,
+		a => cpuAddress,
+		di => cpuDataIn,
+		do => cpuDataOut
+	);
 -- ____________________________________________________________________________________
 -- ROM GOES HERE	
-rom1 : entity work.Z80_BASIC_ROM -- 8KB BASIC
+	rom1 : entity work.Z80_BASIC_ROM -- 8KB BASIC
 	port map(
 		address => cpuAddress(12 downto 0),
 		clock => clk,
@@ -136,7 +122,7 @@ rom1 : entity work.Z80_BASIC_ROM -- 8KB BASIC
 	);
 -- ____________________________________________________________________________________
 -- RAM GOES HERE
-ram1: entity work.InternalRam4K
+	ram1: entity work.InternalRam4K
 	port map(
 		address => cpuAddress(11 downto 0),
 		clock => clk,
@@ -146,7 +132,7 @@ ram1: entity work.InternalRam4K
 	);
 -- ____________________________________________________________________________________
 -- INPUT/OUTPUT DEVICES GO HERE	
-io1 : entity work.bufferedUART
+	io1 : entity work.bufferedUART
 	port map(
 		clk => clk,
 		n_wr => n_interface1CS or n_ioWR,
@@ -163,8 +149,7 @@ io1 : entity work.bufferedUART
 		n_dcd => '0',
 		n_rts => rts1
 	);
-
-sd1 : entity work.sd_controller
+	sd1 : entity work.sd_controller
 	port map(
 		sdCS => sdCS,
 		sdMOSI => sdMOSI,
@@ -209,7 +194,6 @@ sd1 : entity work.sd_controller
 	process (clk)
 	begin
 		if rising_edge(clk) then
-
 			if cpuClkCount < 4 then -- 4 = 10MHz, 3 = 12.5MHz, 2=16.6MHz, 1=25MHz
 				cpuClkCount <= cpuClkCount + 1;
 			else
