@@ -1,7 +1,7 @@
--- program:		Microcomputer.vhd
+-- program:	Microcomputer.vhd
 -- contents:	Z80 core with BASIC interpreter and CP/M boot loader
--- make:			Quartus II (ALTERA)
--- usage:		IP works on Cyclone II(EP2C5T144, FPGA) with SCIF
+-- make:	Quartus II (ALTERA)
+-- usage:	IP works on Cyclone II(EP2C5T144, FPGA) with SCIF
 
 -- This file is copyright by Grant Searle 2014
 -- You are free to use this file in your own projects but must never charge for it nor use it without
@@ -26,73 +26,73 @@ use  IEEE.STD_LOGIC_UNSIGNED.all;
 entity Microcomputer is
 	port(
 		n_reset		: in std_logic;
-		clk			: in std_logic;
-		sramData		: inout std_logic_vector(7 downto 0);
+		clk		: in std_logic;
+		sramData	: inout std_logic_vector(7 downto 0);
 		sramAddress	: out std_logic_vector(15 downto 0);
-		n_sRamWE		: out std_logic;
-		n_sRamCS		: out std_logic;
-		n_sRamOE		: out std_logic;
-		rxd1			: in std_logic;
-		txd1			: out std_logic;
-		rts1			: out std_logic;
-		rxd2			: in std_logic;
-		txd2			: out std_logic;
-		rts2			: out std_logic;
+		n_sRamWE	: out std_logic;
+		n_sRamCS	: out std_logic;
+		n_sRamOE	: out std_logic;
+		rxd1		: in std_logic;
+		txd1		: out std_logic;
+		rts1		: out std_logic;
+		rxd2		: in std_logic;
+		txd2		: out std_logic;
+		rts2		: out std_logic;
 		videoSync	: out std_logic;
-		video			: out std_logic;
+		video		: out std_logic;
 		videoR0		: out std_logic;
 		videoG0		: out std_logic;
 		videoB0		: out std_logic;
 		videoR1		: out std_logic;
 		videoG1		: out std_logic;
 		videoB1		: out std_logic;
-		hSync			: out std_logic;
-		vSync			: out std_logic;
+		hSync		: out std_logic;
+		vSync		: out std_logic;
 		ps2Clk		: inout std_logic;
 		ps2Data		: inout std_logic;
-		sdCS			: out std_logic;
+		sdCS		: out std_logic;
 		sdMOSI		: out std_logic;
 		sdMISO		: in std_logic;
 		sdSCLK		: out std_logic;
-		driveLED		: out std_logic :='1'	
+		driveLED	: out std_logic :='1'	
 	);
 end Microcomputer;
 
 architecture struct of Microcomputer is
-	signal n_WR							: std_logic;
-	signal n_RD							: std_logic;
-	signal cpuAddress					: std_logic_vector(15 downto 0);
-	signal cpuDataOut					: std_logic_vector(7 downto 0);
-	signal cpuDataIn					: std_logic_vector(7 downto 0);
-	signal basRomData					: std_logic_vector(7 downto 0);
+	signal n_WR				: std_logic;
+	signal n_RD				: std_logic;
+	signal cpuAddress			: std_logic_vector(15 downto 0);
+	signal cpuDataOut			: std_logic_vector(7 downto 0);
+	signal cpuDataIn			: std_logic_vector(7 downto 0);
+	signal basRomData			: std_logic_vector(7 downto 0);
 	signal internalRam1DataOut		: std_logic_vector(7 downto 0);
 	signal internalRam2DataOut		: std_logic_vector(7 downto 0);
 	signal interface1DataOut		: std_logic_vector(7 downto 0);
 	signal interface2DataOut		: std_logic_vector(7 downto 0);
-	signal sdCardDataOut				: std_logic_vector(7 downto 0);
-	signal n_memWR						: std_logic :='1';
-	signal n_memRD 					: std_logic :='1';
-	signal n_ioWR						: std_logic :='1';
-	signal n_ioRD 						: std_logic :='1';
-	signal n_MREQ						: std_logic :='1';
-	signal n_IORQ						: std_logic :='1';	
-	signal n_int1						: std_logic :='1';	
-	signal n_int2						: std_logic :='1';	
+	signal sdCardDataOut			: std_logic_vector(7 downto 0);
+	signal n_memWR				: std_logic :='1';
+	signal n_memRD 				: std_logic :='1';
+	signal n_ioWR				: std_logic :='1';
+	signal n_ioRD 				: std_logic :='1';
+	signal n_MREQ				: std_logic :='1';
+	signal n_IORQ				: std_logic :='1';	
+	signal n_int1				: std_logic :='1';	
+	signal n_int2				: std_logic :='1';	
 	signal n_externalRamCS			: std_logic :='1';
 	signal n_internalRam1CS			: std_logic :='1';
 	signal n_internalRam2CS			: std_logic :='1';
-	signal n_basRomCS					: std_logic :='1';
+	signal n_basRomCS			: std_logic :='1';
 	signal n_interface1CS			: std_logic :='1';
 	signal n_interface2CS			: std_logic :='1';
-	signal n_sdCardCS					: std_logic :='1';
+	signal n_sdCardCS			: std_logic :='1';
 	signal serialClkCount			: std_logic_vector(15 downto 0);
-	signal cpuClkCount				: std_logic_vector(5 downto 0); 
-	signal sdClkCount					: std_logic_vector(5 downto 0); 	
-	signal cpuClock					: std_logic;
-	signal serialClock				: std_logic;
-	signal sdClock						: std_logic;	
+	signal cpuClkCount			: std_logic_vector(5 downto 0); 
+	signal sdClkCount			: std_logic_vector(5 downto 0); 	
+	signal cpuClock				: std_logic;
+	signal serialClock			: std_logic;
+	signal sdClock				: std_logic;	
 --CPM
-	signal n_RomActive				: std_logic :='0';
+	signal n_RomActive			: std_logic :='0';
 begin
 --CPM
 -- Disable ROM if out 38. Re-enable when (asynchronous) reset pressed
