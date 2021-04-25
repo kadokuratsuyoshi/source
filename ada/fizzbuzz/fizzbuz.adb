@@ -3,7 +3,6 @@ use Ada.Text_IO;
 
 procedure fizzbuzz is 
 
-
 function fb (N : Integer) return Integer is begin
 	if N mod 15 = 0 then
 		Put_Line ("FizzBuzz");
@@ -16,7 +15,6 @@ function fb (N : Integer) return Integer is begin
 	end if;
 	return N*2;
 end fb;
-
 
 a : Integer;
 begin
