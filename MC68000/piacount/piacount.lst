@@ -1,0 +1,28 @@
+00001 000000                               nam     piacount        
+00002                             * PIA test program
+00003        00A00000             pia      equ     $a00000         
+00004                             *
+00005 001000                               org     $1000           
+00006 001000 41F900A00000                  lea     pia,a0          
+00007 001006 7000                          moveq   #0,d0           
+00008 001008 01C80000                      movep.l d0,0(a0)        
+00009 00100C 203CFF3CFF3C                  move.l  #$ff3cff3c,d0   
+00010 001012 01C80000                      movep.l d0,0(a0)        
+00011 001016 7000                          moveq   #0,d0           
+00012 001018 7200                 loop     moveq   #0,d1           
+00013 00101A 5241                 delay    addq.w  #1,d1           
+00014 00101C 66FC                          bne     delay           
+00015 00101E 5240                          addq    #1,d0           
+00016 001020 1080                          move.b  d0,(a0)         
+00017 001022 E058                          ror     #8,d0           
+00018 001024 11400004                      move.b  d0,4(a0)        
+00019 001028 E158                          rol     #8,d0           
+00020 00102A 60EC                          bra     loop            
+00021 00102C                               end                     
+
+SYMBOL TABLE
+
+PIA      00A00000 |LOOP     00001018 |DELAY    0000101A 
+
+Total symbol=3
+Total errors=0
