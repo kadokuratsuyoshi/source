@@ -1,0 +1,4 @@
+@echo off
+iverilog -o jkff.out jkff_tb.v jkff.v
+vvp jkff.out
+gtkwave test.vcd
