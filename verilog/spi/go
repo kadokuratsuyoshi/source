@@ -1,0 +1,4 @@
+@echo off
+iverilog -o spi.out spi_tb.v spi.v
+vvp spi.out
+gtkwave test.vcd
