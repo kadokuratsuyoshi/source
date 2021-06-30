@@ -1,0 +1,4 @@
+@echo off
+iverilog -o tram2.out tram2_tb.v tram2.v
+vvp tram2.out
+gtkwave test.vcd
